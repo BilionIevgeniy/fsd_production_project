@@ -1,0 +1,49 @@
+{
+  "compilerOptions": {
+    // Instructs the TypeScript compiler how to compile .ts files.
+    "outDir": "./dist/",
+    // Highlights all places where the type is not specified
+    // However, this does not mean that you can't use any at all.
+    // It only means that in such situations, the developer must explicitly write any.
+    "noImplicitAny": true,
+    "module": "esnext",
+    // Which specification to compile to: for supporting most browsers
+    "target": "es5",
+    "ignoreDeprecations": "6.0",
+    "jsx": "react-jsx",
+    // The compiler will process not only TS files but also JS files
+    "allowJs": true,
+    "moduleResolution": "node",
+    // For absolute imports
+    "baseUrl": ".",
+    "paths": {
+      "*": ["./src/*"]
+    },
+
+    // esModuleInterop allows working with packages that use
+    // commonjs as if they were regular packages using import (require() module.export) = common js
+    // import Moment from 'moment';
+    // without the esModuleInterop flag, the result is undefined
+    // console.log(Moment);
+    // with the flag, the result is [object Object]
+    // console.log(Moment);
+    "esModuleInterop": true,
+
+    // If a library does not have a default import,
+    // loaders like ts-loader or babel-loader automatically create them
+    // instead of an import like this
+    // import * as React from 'react';
+    // you can write an import like this
+    // import React from 'react';
+    "allowSyntheticDefaultImports": true,
+    // Enable all strict type-checking options.
+    "strict": true,
+    // Disallow inconsistently-cased references to the same file.
+    "forceConsistentCasingInFileNames": true
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  }
+}

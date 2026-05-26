@@ -1,0 +1,30 @@
+@use './reset';
+@use './variables/global.scss';
+@use './themes/normal.scss' as *;
+@use './themes/dark.scss' as *;
+
+.app {
+  font: var(--font-m);
+  color: var(--primary-color);
+  background-color: var(--background-color);
+  min-height: 100dvh;
+}
+
+.content-page {
+  height: calc(100dvh - var(--navbar-height));
+  display: flex;
+}
+
+.page-wrapper {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+.app-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100dvh;
+  font-size: 24px;
+  color: #333;
+}

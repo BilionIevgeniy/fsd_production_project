@@ -3,7 +3,7 @@ import Backend from 'i18next-http-backend';
 import LanguageDetector from 'i18next-browser-languagedetector'; // Don't forget to use it!
 import { initReactI18next } from 'react-i18next';
 
-const translationApiUrl = 'http://localhost:3000'; // Base URL of your backend
+const translationApiUrl = 'https://my-nest-backend-vrot.onrender.com'; // Base URL of your backend
 
 i18next
   .use(Backend)

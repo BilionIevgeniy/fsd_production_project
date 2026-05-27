@@ -1,10 +1,10 @@
 import { Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Navbar } from 'widgets/Navbar';
-import { Sidebar } from 'widgets/Sidebar';
+import { Navbar } from '../widgets/Navbar';
+import { Sidebar } from '../widgets/Sidebar';
 import { AppRouter } from './providers/router';
 import './styles/index.scss';
-import { Loader } from 'shared/ui';
+import { Loader } from '../shared/ui';
 
 function App() {
   return (

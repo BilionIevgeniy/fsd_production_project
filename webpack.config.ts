@@ -1,37 +1,26 @@
-import path from 'path';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
 import webpack from 'webpack';
+import { buildWebpackConfig } from './config/build/buildWebpackConfig';
+import { BuildOptions, BuildPaths } from './config/build/types/config';
+import path from 'path';
 
-const config: webpack.Configuration = {
-  mode: 'development',
+const paths: BuildPaths = {
   entry: path.resolve(__dirname, 'src', 'index.tsx'),
-  output: {
-    filename: '[name].[contenthash].js',
-    path: path.resolve(__dirname, 'build'),
-    clean: true,
-  },
-  module: {
-    //   rules - rules for processing files(ts, js, css, scss, svg, etc).
-    rules: [
-      {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
-      },
-    ],
-  },
-  //   resolve - help to write import 'components/Button' instead of 'components/Button.tsx'
-  resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
-  },
-  //   plugins - additional functionality for webpack
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'public', 'index.html'),
-    }),
-    // Show progress bar during build
-    new webpack.ProgressPlugin(),
-  ],
+  build: path.resolve(__dirname, 'build'),
+  html: path.resolve(__dirname, 'public', 'index.html'),
+  src: path.resolve(__dirname, 'src'),
 };
+const mode =
+  process.env.NODE_ENV === 'development' ? 'development' : 'production';
+const isDev = mode === 'development';
+const port = process.env.PORT ? Number(process.env.PORT) : 3006;
+
+const options: BuildOptions = {
+  mode,
+  port,
+  paths,
+  isDev,
+};
+
+const config: webpack.Configuration = buildWebpackConfig(options);
 
 export default config;

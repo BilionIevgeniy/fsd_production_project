@@ -35,4 +35,5 @@ i18next
       useSuspense: true, // Leave as false for manual isLoading
     },
   });
+
 export const initI18n: i18n = i18next;

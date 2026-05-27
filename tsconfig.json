@@ -2,18 +2,27 @@
   "compilerOptions": {
     // Instructs the TypeScript compiler how to compile .ts files.
     "outDir": "./dist/",
+
     // Highlights all places where the type is not specified
     // However, this does not mean that you can't use any at all.
     // It only means that in such situations, the developer must explicitly write any.
     "noImplicitAny": true,
+
+    // module - describes how modules should be organized. For example, esnext is the latest version of ECMAScript
     "module": "esnext",
+
     // Which specification to compile to: for supporting most browsers
     "target": "es5",
+
     "ignoreDeprecations": "6.0",
     "jsx": "react-jsx",
+
     // The compiler will process not only TS files but also JS files
     "allowJs": true,
+
+    // Module resolution strategy - how the compiler resolves module paths
     "moduleResolution": "node",
+
     // For absolute imports
     "baseUrl": ".",
     "paths": {
@@ -31,16 +40,26 @@
 
     // If a library does not have a default import,
     // loaders like ts-loader or babel-loader automatically create them
-    // instead of an import like this
+    // instead of an import like this:
     // import * as React from 'react';
-    // you can write an import like this
+    // you can write an import like this:
     // import React from 'react';
     "allowSyntheticDefaultImports": true,
+
     // Enable all strict type-checking options.
     "strict": true,
+
     // Disallow inconsistently-cased references to the same file.
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+
+    // Types for node.js
+    "types": ["node"]
   },
+
+  // Include source files and configuration files
+  "include": ["src/**/*", "webpack.config.ts", "config/**/*"],
+
+  // ts-node configuration for running TypeScript files directly.We need it for webpack.config.ts
   "ts-node": {
     "compilerOptions": {
       "module": "CommonJS"

@@ -21,7 +21,7 @@ export const buildWebpackConfig = (
     plugins: buildPlugins(options),
     module: {
       //   rules - for processing files(ts, js, css, scss, svg, etc).
-      rules: buildLoaders(),
+      rules: buildLoaders(options),
     },
     //   resolve - help to write import 'components/Button' instead of 'components/Button.tsx'
     resolve: buildResolvers(),

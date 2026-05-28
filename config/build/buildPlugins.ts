@@ -1,5 +1,6 @@
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { BuildOptions } from './types/config';
 
 export const buildPlugins = (
@@ -13,5 +14,10 @@ export const buildPlugins = (
     }),
     // Show progress bar during build
     new webpack.ProgressPlugin(),
+    // Extract CSS to separate files
+    new MiniCssExtractPlugin({
+      filename: 'css/[name].[contenthash].css',
+      chunkFilename: 'css/[name].[contenthash].css',
+    }),
   ];
 };

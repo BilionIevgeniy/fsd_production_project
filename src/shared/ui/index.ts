@@ -1,3 +1,3 @@
-export { Button } from './Button/Button';
-export { AppLink } from './AppLink/AppLink';
+export { Button } from './Button';
+export { AppLink } from './AppLink';
 export { Loader } from './Loader';

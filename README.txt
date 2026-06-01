@@ -62,27 +62,117 @@ focused on scalable, maintainable, and modern web applications.
 
 
 
-FCD
+FSD (Feature-Sliced Design)
+---------------------------------------------------------------
+IMPORT RULE: each layer can only import from layers BELOW it.
+  app → pages → widgets → features → entities → shared
+Slices within the same layer CANNOT import each other (except shared).
+---------------------------------------------------------------
+
 src/
-  ├── app/                  # LAYER Initialization (Providers, Router) Entry point of the project
-  ├── pages/                # LAYER Pages High-level screens (Home, Profile)
-  ├── widgets/              # LAYER Composition (Navbar, Footer)
-  │    └── Navbar/          #   SLICE Widget components
-  │         ├── ui/         #     SEGMENT 
-  │         └── index.ts    #     Public API
-  ├── features/             # LAYER Feature/Action Business logic and actions(ThemeSwitcher, Auth)
-  │    └── ThemeSwitcher/   #   SLICE Theme switching logic
-  │         ├── ui/         #     SEGMENT
-  │         ├── model/      #     SEGMENT 
-  │         └── index.ts
-  ├── entities/             # LAYER Entities (User, Article)
-  │    └── User/            #   SLICE
-  │         ├── ui/         #     SEGMENT User card
-  │         ├── model/      #     SEGMENT User state
-  │         └── index.ts
-  └── shared/               # LAYER Infrastructure Reusable low-level code(Button, Input, API)
-       ├── ui/              #   SEGMENT UI-Kit
-       └── api/             #   SEGMENT Basic axios config
+  │
+  ├── app/                        # LAYER 1: App initialization
+  │    │                          # Entry point. Everything that runs ONCE on startup lives here.
+  │    │                          # No business logic — just wires the whole project together.
+  │    ├── providers/             # React providers: Theme, Language, Router, Redux Store
+  │    │    └── ThemeProvider/
+  │    │         ├── ui/          # Provider component with useState/useEffect inside
+  │    │         └── index.ts     # Re-export
+  │    ├── styles/                # Global styles: reset, CSS variables, themes
+  │    │    ├── index.scss        # Styles entry point, imported once in App.tsx
+  │    │    ├── reset.scss        # Browser style reset
+  │    │    ├── variables/        # CSS custom properties (colors, fonts, spacing)
+  │    │    └── themes/           # Theme classes: .dark, .normal — override CSS variables
+  │    ├── types/                 # Global TypeScript types and declarations (*.d.ts)
+  │    └── App.tsx                # Root component: layout + providers + Suspense
+  │
+  ├── pages/                      # LAYER 2: Pages
+  │    │                          # One page = one router route.
+  │    │                          # Pages only COMPOSE widgets and features — no own logic.
+  │    └── ProfilePage/           # SLICE — one page
+  │         ├── ui/
+  │         │    ├── ProfilePage.tsx        # Page component itself
+  │         │    └── ProfilePage.async.tsx  # Lazy wrapper for code splitting
+  │         └── index.ts                    # Public API: export { ProfilePage }
+  │
+  ├── widgets/                    # LAYER 3: Widgets
+  │    │                          # Large self-contained UI blocks built from multiple features/entities.
+  │    │                          # Example: Navbar knows about user, theme, language — composes them all.
+  │    └── Navbar/                # SLICE
+  │         ├── ui/
+  │         │    ├── Navbar.tsx            # Widget component
+  │         │    └── Navbar.module.scss    # Styles (CSS Modules)
+  │         └── index.ts                  # Public API: export { Navbar }
+  │
+  ├── features/                   # LAYER 4: Features
+  │    │                          # A user action that delivers business value.
+  │    │                          # Answers: "What can the user DO?"
+  │    │                          # Examples: toggle theme, log in, add to cart.
+  │    └── ThemeSwitcher/         # SLICE
+  │         ├── ui/
+  │         │    ├── ThemeSwitcher.tsx         # Button/toggle UI component
+  │         │    └── ThemeSwitcher.module.scss
+  │         ├── model/
+  │         │    ├── types.ts                  # Local types for this feature (if needed)
+  │         │    ├── slice.ts                  # Redux slice (if the feature uses Redux)
+  │         │    ├── selectors.ts              # Selectors from the store
+  │         │    └── thunks.ts                 # Async actions (API calls)
+  │         ├── lib/
+  │         │    └── useSomeHelper.ts          # Hooks/utils specific ONLY to this feature
+  │         ├── api/
+  │         │    └── featureApi.ts             # RTK Query endpoint or axios call for this feature
+  │         └── index.ts                       # Public API: export { ThemeSwitcher }
+  │
+  ├── entities/                   # LAYER 5: Entities
+  │    │                          # Business domain objects.
+  │    │                          # Answers: "What does the app WORK WITH?"
+  │    │                          # Examples: User, Post, Product, Order, Comment.
+  │    │                          # NOT here: theme, language — those go in shared/config (not business entities).
+  │    └── User/                  # SLICE
+  │         ├── ui/
+  │         │    ├── UserCard.tsx            # User card display component
+  │         │    └── UserCard.module.scss
+  │         ├── model/
+  │         │    ├── types.ts                # interface User { id, name, role... }
+  │         │    ├── slice.ts                # Redux slice for user state
+  │         │    ├── selectors.ts            # selectCurrentUser, selectUserRole...
+  │         │    └── thunks.ts               # fetchUserById, updateProfile...
+  │         ├── lib/
+  │         │    └── getUserInitials.ts      # Pure utils over the entity (no hooks, no store)
+  │         ├── api/
+  │         │    └── userApi.ts              # RTK Query or axios for /users endpoint
+  │         └── index.ts                     # Public API: export { UserCard, selectCurrentUser }
+  │
+  └── shared/                     # LAYER 6: Infrastructure
+       │                          # Reusable code with NO business logic.
+       │                          # Knows nothing about layers above. Can be copy-pasted to any project.
+       ├── ui/                    # UI-kit: atomic components with no business logic
+       │    ├── Button/
+       │    │    ├── Button.tsx
+       │    │    ├── Button.module.scss
+       │    │    └── index.ts     # export { Button }
+       │    ├── Input/
+       │    ├── Modal/
+       │    └── index.ts          # Barrel: export { Button, Input, Modal }
+       ├── api/                   # Base HTTP setup: axios instance, baseURL, interceptors
+       │    └── api.ts
+       ├── config/                # Configuration for cross-cutting concerns
+       │    ├── theme/
+       │    │    ├── ThemeContext.ts   # createContext for theme
+       │    │    ├── useTheme.ts       # useTheme hook — lives NEXT TO its context
+       │    │    └── types.ts          # enum Theme { LIGHT, DARK }
+       │    └── i18n/
+       │         ├── i18n.ts           # i18next initialization
+       │         ├── LanguageContext.ts
+       │         ├── useLanguage.ts    # useLanguage hook — lives next to its context
+       │         └── types.ts          # enum Language { RU, EN }
+       ├── hooks/                 # GENERIC hooks only — not tied to any business concept
+       │    ├── useDebounce.ts    # Delays a function call
+       │    ├── useLocalStorage.ts
+       │    └── useClickOutside.ts
+       └── lib/                   # Pure utilities: no React, no store, no API
+            └── classNames/
+                 └── index.ts     # classNames('btn', { active: isActive })
 
 
 Internationalization (i18n) - Quick Start

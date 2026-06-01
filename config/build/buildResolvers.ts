@@ -6,7 +6,9 @@ export const buildResolvers = (
 ): webpack.ResolveOptions => {
   return {
     extensions: ['.tsx', '.ts', '.js'],
-    // modules - where to look for modules
     modules: [options.paths.src, 'node_modules'],
+    alias: {
+      '@': options.paths.src,
+    },
   };
 };

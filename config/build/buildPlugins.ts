@@ -16,8 +16,8 @@ export const buildPlugins = (
     new webpack.ProgressPlugin(),
     // Extract CSS to separate files
     new MiniCssExtractPlugin({
-      filename: 'css/[name].[contenthash].css',
-      chunkFilename: 'css/[name].[contenthash].css',
+      filename: 'css/[name].[contenthash:8].css',
+      chunkFilename: 'css/[name].[contenthash:8].css',
     }),
   ];
 };

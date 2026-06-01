@@ -24,7 +24,7 @@ export const buildWebpackConfig = (
       rules: buildLoaders(options),
     },
     //   resolve - help to write import 'components/Button' instead of 'components/Button.tsx'
-    resolve: buildResolvers(),
+    resolve: buildResolvers(options),
     devtool: isDev ? 'inline-source-map' : undefined,
     devServer: buildDevServer(options),
   };

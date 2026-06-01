@@ -7,5 +7,7 @@ export const buildDevServer = (options: BuildOptions): Configuration => {
   return {
     port,
     open: isDev,
+    // historyApiFallback - open pages through react router after refresh
+    historyApiFallback: true,
   };
 };

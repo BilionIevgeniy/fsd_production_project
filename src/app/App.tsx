@@ -7,12 +7,13 @@ import './styles/index.scss';
 
 import { Loader } from '../shared/ui';
 import { useTheme } from '@/shared/config/theme/useTheme';
+import { classNames } from '@/shared/lib/classNames';
 
 function App() {
   const { theme, toggleTheme } = useTheme();
   return (
     <Suspense fallback={<Loader />}>
-      <div className={`app ${theme}`}>
+      <div className={classNames('app', {}, [theme])}>
         <button onClick={toggleTheme}> Switch Theme</button>
         <Navbar />
         <div className="content-page">

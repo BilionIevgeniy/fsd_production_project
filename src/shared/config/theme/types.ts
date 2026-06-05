@@ -5,12 +5,7 @@ export enum Theme {
 
 export const LOCAL_STORAGE_THEME_KEY = 'theme';
 
-export interface ThemeContextProps {
-  theme: Theme;
-  toggleTheme: () => void;
-}
-
-export interface UseThemeResult {
+export interface ThemeContextValue {
   theme: Theme;
   toggleTheme: () => void;
 }

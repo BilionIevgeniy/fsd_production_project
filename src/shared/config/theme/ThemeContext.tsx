@@ -1,7 +1,7 @@
-import { Theme, ThemeContextProps } from '@/shared/config/theme/types';
+import { Theme, ThemeContextValue } from 'shared/config/theme/types';
 import { createContext } from 'react';
 
-export const ThemeContext = createContext<ThemeContextProps>({
+export const ThemeContext = createContext<ThemeContextValue>({
   theme: Theme.NORMAL,
   toggleTheme: () => {},
 });

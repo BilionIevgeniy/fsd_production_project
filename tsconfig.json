@@ -28,7 +28,6 @@
 
     // Map paths to directories
     "paths": {
-      "@/*": ["./src/*"],
       "*": ["./src/*"]
     },
 

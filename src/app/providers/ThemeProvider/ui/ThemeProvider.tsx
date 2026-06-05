@@ -1,5 +1,5 @@
-import { ThemeContext } from '@/shared/config/theme/ThemeContext';
-import { LOCAL_STORAGE_THEME_KEY, Theme } from '@/shared/config/theme/types';
+import { ThemeContext } from 'shared/config/theme/ThemeContext';
+import { LOCAL_STORAGE_THEME_KEY, Theme } from 'shared/config/theme/types';
 import { FC, useCallback, useMemo, useState } from 'react';
 
 export const ThemeProvider: FC = ({ children }) => {

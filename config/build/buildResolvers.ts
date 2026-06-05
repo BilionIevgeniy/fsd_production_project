@@ -7,8 +7,8 @@ export const buildResolvers = (
   return {
     extensions: ['.tsx', '.ts', '.js'],
     modules: [options.paths.src, 'node_modules'],
-    alias: {
-      '@': options.paths.src,
-    },
+    preferAbsolute: true,
+    mainFiles: ['index'],
+    alias: {},
   };
 };

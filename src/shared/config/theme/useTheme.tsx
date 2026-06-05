@@ -4,7 +4,7 @@ import {
   Theme,
   UseThemeResult,
 } from '@/shared/config/theme/types';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 
 export const useTheme = (): UseThemeResult => {
   const { theme, setTheme } = useContext(ThemeContext);

@@ -3,5 +3,5 @@ import { createContext } from 'react';
 
 export const ThemeContext = createContext<ThemeContextProps>({
   theme: Theme.NORMAL,
-  setTheme: (theme) => {},
+  toggleTheme: () => {},
 });

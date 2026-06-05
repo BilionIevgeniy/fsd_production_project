@@ -7,7 +7,7 @@ export const LOCAL_STORAGE_THEME_KEY = 'theme';
 
 export interface ThemeContextProps {
   theme: Theme;
-  setTheme: (theme: Theme) => void;
+  toggleTheme: () => void;
 }
 
 export interface UseThemeResult {

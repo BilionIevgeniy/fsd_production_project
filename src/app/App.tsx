@@ -1,4 +1,4 @@
-import { Suspense, useState } from 'react';
+import { Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Navbar } from '../widgets/Navbar';
 import { Sidebar } from '../widgets/Sidebar';

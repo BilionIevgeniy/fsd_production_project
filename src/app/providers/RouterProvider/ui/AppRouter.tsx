@@ -1,12 +1,12 @@
-import { AboutPage } from 'pages/AboutPage';
-import { MainPage } from 'pages/MainPage';
 import { Routes, Route } from 'react-router-dom';
+import { routeConfig } from '../config/routeConfig';
 
 function AppRouter() {
   return (
     <Routes>
-      <Route path="/" element={<MainPage />} />
-      <Route path="/about" element={<AboutPage />} />
+      {routeConfig.map((route) => (
+        <Route key={route.path} path={route.path} element={route.element} />
+      ))}
     </Routes>
   );
 }

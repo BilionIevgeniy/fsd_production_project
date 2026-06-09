@@ -10,11 +10,10 @@ import { useTheme } from 'shared/config/theme/useTheme';
 import { classNames } from 'shared/lib/classNames';
 
 function App() {
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useTheme();
   return (
     <Suspense fallback={<Loader />}>
       <div className={classNames('app', {}, [theme])}>
-        <button onClick={toggleTheme}> Switch Theme</button>
         <Navbar />
         <div className="content-page">
           <Sidebar children="" />

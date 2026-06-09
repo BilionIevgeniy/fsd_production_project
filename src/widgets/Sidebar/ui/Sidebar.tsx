@@ -1,4 +1,11 @@
+import { useTheme } from 'shared/config/theme/useTheme';
+
 export function Sidebar({ children = '' }) {
   //t('toggle_btn')
-  return <div>{children}</div>;
+  const { theme, toggleTheme } = useTheme();
+  return (
+    <div>
+      <button onClick={toggleTheme}> Switch Theme</button>
+    </div>
+  );
 }

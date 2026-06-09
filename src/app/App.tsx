@@ -6,7 +6,7 @@ import { AppRouter } from './providers/RouterProvider';
 import './styles/index.scss';
 
 import { Loader } from '../shared/ui';
-import { useTheme } from 'shared/config/theme/useTheme';
+import { useTheme } from 'shared/config/theme';
 import { classNames } from 'shared/lib/classNames';
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
       <div className={classNames('app', {}, [theme])}>
         <Navbar />
         <div className="content-page">
-          <Sidebar children="" />
+          <Sidebar />
           <AppRouter />
         </div>
       </div>

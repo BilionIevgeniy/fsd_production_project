@@ -17,7 +17,9 @@ function App() {
         <Navbar />
         <div className="content-page">
           <Sidebar />
-          <AppRouter />
+          <div className="page-wrapper">
+            <AppRouter />
+          </div>
         </div>
       </div>
     </Suspense>

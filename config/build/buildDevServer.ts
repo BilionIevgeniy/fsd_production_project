@@ -9,5 +9,7 @@ export const buildDevServer = (options: BuildOptions): Configuration => {
     open: isDev,
     // historyApiFallback - open pages through react router after refresh
     historyApiFallback: true,
+    // hot - force reload page without refresh when changes in files occur
+    hot: true,
   };
 };

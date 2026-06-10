@@ -139,9 +139,6 @@ module.exports = {
       { markupOnly: true, ignoreAttribute: ['to', 'target', 'path'] },
     ],
   },
-  globals: {
-    __IS_DEV__: true,
-  },
   overrides: [
     {
       // Disable rules requiring type information for configuration files

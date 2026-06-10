@@ -19,6 +19,7 @@ i18next
     },
     // debug is used to enable/disable debug mode
     debug: __IS_DEV__,
+    load: 'languageOnly',
     fallbackLng: 'en',
     // List of all available namespaces
     ns: ['common'], // <--- VERY IMPORTANT: Define all your namespaces here

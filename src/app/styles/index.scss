@@ -3,6 +3,12 @@
 @use './themes/normal.scss' as *;
 @use './themes/dark.scss' as *;
 
+*,
+*::before,
+*::after {
+  color: var(--primary-color);
+}
+
 .app {
   font: var(--font-m);
   color: var(--primary-color);

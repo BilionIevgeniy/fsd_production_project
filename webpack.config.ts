@@ -17,7 +17,7 @@ const paths: BuildPaths = {
 export default (env: BuildEnv) => {
   const mode = env.mode || 'development';
   const isDev = mode === 'development';
-  const port = env.port || 3006;
+  const port = env.port || 4200;
 
   const options: BuildOptions = {
     mode,

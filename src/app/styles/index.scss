@@ -1,5 +1,5 @@
 @use './reset';
-@use './variables/global.scss';
+@use './variables/global';
 @use './themes/normal.scss' as *;
 @use './themes/dark.scss' as *;
 
@@ -10,20 +10,20 @@
 }
 
 .app {
+  min-height: 100dvh;
   font: var(--font-m);
   color: var(--primary-color);
   background-color: var(--bg-color);
-  min-height: 100dvh;
 }
 
 .content-page {
-  height: calc(100dvh - var(--navbar-height));
   display: flex;
+  height: calc(100dvh - var(--navbar-height));
 }
 
 .page-wrapper {
-  flex-grow: 1;
   padding: 20px;
+  flex-grow: 1;
 }
 
 .app-loading {
@@ -53,12 +53,12 @@
 @keyframes dot-pulse {
   0%,
   100% {
-    transform: scale(0.6);
     opacity: 0.4;
+    transform: scale(0.6);
   }
 
   50% {
-    transform: scale(1.2);
     opacity: 1;
+    transform: scale(1.2);
   }
 }

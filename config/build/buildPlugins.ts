@@ -8,6 +8,7 @@ export const buildPlugins = (options: BuildOptions): webpack.WebpackPluginInstan
   const { paths, isDev } = options;
 
   const plugins = [
+    // HtmlWebpackPlugin - generate HTML file with injected scripts and styles
     new HtmlWebpackPlugin({
       template: paths.html,
     }),
@@ -18,6 +19,7 @@ export const buildPlugins = (options: BuildOptions): webpack.WebpackPluginInstan
       filename: 'css/[name].[contenthash:8].css',
       chunkFilename: 'css/[name].[contenthash:8].css',
     }),
+    // Define global variables
     new webpack.DefinePlugin({
       __IS_DEV__: JSON.stringify(isDev),
     }),

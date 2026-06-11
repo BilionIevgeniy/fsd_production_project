@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next';
 import LightIcon from 'shared/assets/icons/theme-light.svg';
 import DarkIcon from 'shared/assets/icons/theme-dark.svg';
 import { useTheme, Theme } from 'shared/config/theme';
@@ -8,12 +7,7 @@ interface ThemeSwitcherProps {
   className?: string;
 }
 
-export function ThemeSwitcher({ className = '' }: ThemeSwitcherProps) {
+export function ThemeSwitcher(_: ThemeSwitcherProps) {
   const { theme, toggleTheme } = useTheme();
-  const { t } = useTranslation();
-  return (
-    <Button onClick={toggleTheme}>
-      {theme !== Theme.DARK ? <DarkIcon /> : <LightIcon />}
-    </Button>
-  );
+  return <Button onClick={toggleTheme}>{theme !== Theme.DARK ? <DarkIcon /> : <LightIcon />}</Button>;
 }

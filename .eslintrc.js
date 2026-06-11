@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
   // Define the environment in which the code will run
   env: {
@@ -88,8 +90,7 @@ module.exports = {
       'warn',
       {
         code: 120, // Maximum code length
-        tabWidth: 4, // Tab width for length calculation. Must match .prettierrc.json
-        comments: 120, // Maximum comment length
+        tabWidth: 2, // Must match .prettierrc
         ignoreComments: true,
         ignoreTrailingComments: true,
         ignoreUrls: true,

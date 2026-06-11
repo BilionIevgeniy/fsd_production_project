@@ -4,8 +4,7 @@ import { FC, useCallback, useMemo, useState } from 'react';
 
 export const ThemeProvider: FC = ({ children }) => {
   const [theme, setTheme] = useState<Theme>(
-    () =>
-      (localStorage.getItem(LOCAL_STORAGE_THEME_KEY) as Theme) || Theme.NORMAL,
+    () => (localStorage.getItem(LOCAL_STORAGE_THEME_KEY) as Theme) || Theme.NORMAL,
   );
 
   const toggleTheme = useCallback(() => {
@@ -14,11 +13,7 @@ export const ThemeProvider: FC = ({ children }) => {
     localStorage.setItem(LOCAL_STORAGE_THEME_KEY, newTheme);
   }, [theme]);
 
-  const contextValue = useMemo(() => ({ theme, toggleTheme }), [theme]);
+  const contextValue = useMemo(() => ({ theme, toggleTheme }), [theme, toggleTheme]);
 
-  return (
-    <ThemeContext.Provider value={contextValue}>
-      {children}
-    </ThemeContext.Provider>
-  );
+  return <ThemeContext.Provider value={contextValue}>{children}</ThemeContext.Provider>;
 };

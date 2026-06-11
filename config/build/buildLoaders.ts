@@ -25,11 +25,8 @@ export const buildLoaders = (options: BuildOptions): webpack.RuleSetRule[] => {
           modules: {
             mode: 'local',
             // auto - automatically apply unique class names to files with .module.* extension
-            auto: (resourcePath: string) =>
-              resourcePath.endsWith('.module.scss'),
-            localIdentName: options.isDev
-              ? '[name]__[local]__[hash:base64:5]'
-              : '[hash:base64:8]',
+            auto: (resourcePath: string) => resourcePath.endsWith('.module.scss'),
+            localIdentName: options.isDev ? '[name]__[local]__[hash:base64:5]' : '[hash:base64:8]',
           },
         },
       },

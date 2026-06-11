@@ -18,11 +18,7 @@ export const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   return (
-    <button
-      onClick={onClick}
-      {...props}
-      className={classNames(cls.Button, {}, [className, cls[theme]])}
-    >
+    <button onClick={onClick} className={classNames(cls.Button, {}, [className, cls[theme]])} {...props}>
       {children}
     </button>
   );

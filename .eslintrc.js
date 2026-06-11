@@ -52,14 +52,10 @@ module.exports = {
   },
   rules: {
     '@typescript-eslint/naming-convention': 'off',
-    // === Formatting-related rules delegated to Prettier ===
-    // Delegate all formatting rules to Prettier.
-    // Prettier will automatically use configuration from .prettierrc.json
     'prettier/prettier': 'error',
-    indent: 'off', // Disable standard ESLint indent rule as Prettier handles it
-    'react/jsx-indent': 'off', // Disable as Prettier manages this
-    'react/jsx-indent-props': 'off', // Disable as Prettier manages this
-    'linebreak-style': 'off', // Prettier also manages line breaks
+    'react/jsx-indent': 'off',
+    'react/jsx-indent-props': 'off',
+    'linebreak-style': 'off',
 
     // === Common rules you often configure ===
     'no-console': ['warn', { allow: ['warn', 'error', 'info'] }], // Allow warn, error, info
@@ -70,10 +66,7 @@ module.exports = {
     // 'jsx-a11y/no-static-element-interactions': 'off', // Disable if there is a need to use click/keypress on non-interactive elements
     // 'jsx-a11y/click-events-have-key-events': 'off', // Disable if necessary
     'react/react-in-jsx-scope': 'off', // Disable for React 17+ (new JSX Transform)
-    'react/jsx-filename-extension': [
-      1,
-      { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
-    ], // Allow JSX in .ts and .tsx files
+    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }], // Allow JSX in .ts and .tsx files
     'import/extensions': [
       // Allow imports without specifying extensions for certain file types
       'error',
@@ -116,10 +109,7 @@ module.exports = {
 
     // === Rule for component definition ===
     // Allow using both function declaration and arrow functions for components
-    'react/function-component-definition': [
-      'error',
-      { namedComponents: ['function-declaration', 'arrow-function'] },
-    ],
+    'react/function-component-definition': ['error', { namedComponents: ['function-declaration', 'arrow-function'] }],
 
     // === Rule for import/no-extraneous-dependencies ===
     'import/no-extraneous-dependencies': [
@@ -135,10 +125,7 @@ module.exports = {
         ],
       },
     ],
-    'i18next/no-literal-string': [
-      'error',
-      { markupOnly: true, ignoreAttribute: ['to', 'target', 'path'] },
-    ],
+    'i18next/no-literal-string': ['error', { markupOnly: true, ignoreAttribute: ['to', 'target', 'path'] }],
   },
   overrides: [
     {

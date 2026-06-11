@@ -10,8 +10,8 @@ import './styles/index.scss';
 function App() {
   const { theme } = useTheme();
   return (
-    <Suspense fallback={<Loader />}>
-      <div className={classNames('app', {}, [theme])}>
+    <div className={classNames('app', {}, [theme])}>
+      <Suspense fallback={<Loader />}>
         <Navbar />
         <div className="content-page">
           <Sidebar />
@@ -19,8 +19,8 @@ function App() {
             <AppRouter />
           </div>
         </div>
-      </div>
-    </Suspense>
+      </Suspense>
+    </div>
   );
 }
 

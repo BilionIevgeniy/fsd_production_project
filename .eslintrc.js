@@ -136,6 +136,16 @@ module.exports = {
       },
       rules: {
         'i18next/no-literal-string': 'off',
+        // airbnb-typescript replaces these base rules with type-aware variants.
+        // Type-aware rules crash when project: null, so restore the base rules.
+        '@typescript-eslint/dot-notation': 'off',
+        'dot-notation': 'error',
+        '@typescript-eslint/no-implied-eval': 'off',
+        'no-implied-eval': 'error',
+        '@typescript-eslint/no-throw-literal': 'off',
+        'no-throw-literal': 'error',
+        '@typescript-eslint/return-await': 'off',
+        'no-return-await': 'error',
       },
     },
   ],

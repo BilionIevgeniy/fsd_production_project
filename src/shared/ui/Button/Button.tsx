@@ -16,10 +16,8 @@ export const Button: React.FC<ButtonProps> = ({
   onClick,
   theme = ThemeButton.CLEAR,
   ...props
-}) => {
-  return (
+}) => (
     <button onClick={onClick} className={classNames(cls.Button, {}, [className, cls[theme]])} {...props}>
       {children}
     </button>
   );
-};

@@ -15,7 +15,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended', // Recommended rules for TypeScript from ESLint
     'airbnb', // Popular Airbnb rule set for JS
     'airbnb-typescript', // Airbnb rules for TypeScript
-    'plugin:prettier/recommended', // Important: Disables conflicting ESLint rules and enables the prettier/prettier rule
+    'prettier', // Important: Disables conflicting ESLint rules and enables the prettier/prettier rule
   ],
   // Parser that ESLint will use to analyze the code
   parser: '@typescript-eslint/parser', // Use TypeScript parser
@@ -26,14 +26,14 @@ module.exports = {
     },
     ecmaVersion: 'latest', // ECMAScript version
     sourceType: 'module', // Allows using imports/exports
-    project: './tsconfig.json', // Path to tsconfig.json file for TypeScript rules
+    project: './tsconfig.eslint.json', // Path to tsconfig.json file for TypeScript rules
     tsconfigRootDir: __dirname,
   },
   // Plugins that add extra rules or functionality
   plugins: [
     'react',
     '@typescript-eslint',
-    'i18next', // Plugin for working with i18next - checks for unused keys
+    'i18next', // Plugin for working with i18next
     'prettier', // Prettier plugin for ESLint
   ],
   settings: {
@@ -52,10 +52,14 @@ module.exports = {
   },
   rules: {
     '@typescript-eslint/naming-convention': 'off',
-    'prettier/prettier': 'error',
-    'react/jsx-indent': 'off',
-    'react/jsx-indent-props': 'off',
-    'linebreak-style': 'off',
+    // === Formatting-related rules delegated to Prettier ===
+    // Delegate all formatting rules to Prettier.
+    // Prettier will automatically use configuration from .prettierrc.json
+    // 'prettier/prettier': 'error',
+    indent: 'off', // Disable standard ESLint indent rule as Prettier handles it
+    'react/jsx-indent': 'off', // Disable as Prettier manages this
+    'react/jsx-indent-props': 'off', // Disable as Prettier manages this
+    'linebreak-style': 'off', // Prettier also manages line breaks
 
     // === Common rules you often configure ===
     'no-console': ['warn', { allow: ['warn', 'error', 'info'] }], // Allow warn, error, info
@@ -66,7 +70,10 @@ module.exports = {
     // 'jsx-a11y/no-static-element-interactions': 'off', // Disable if there is a need to use click/keypress on non-interactive elements
     // 'jsx-a11y/click-events-have-key-events': 'off', // Disable if necessary
     'react/react-in-jsx-scope': 'off', // Disable for React 17+ (new JSX Transform)
-    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }], // Allow JSX in .ts and .tsx files
+    'react/jsx-filename-extension': [
+      1,
+      { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
+    ], // Allow JSX in .ts and .tsx files
     'import/extensions': [
       // Allow imports without specifying extensions for certain file types
       'error',
@@ -83,7 +90,8 @@ module.exports = {
       'warn',
       {
         code: 120, // Maximum code length
-        tabWidth: 2, // Must match .prettierrc
+        tabWidth: 4, // Tab width for length calculation. Must match .prettierrc.json
+        comments: 120, // Maximum comment length
         ignoreComments: true,
         ignoreTrailingComments: true,
         ignoreUrls: true,
@@ -109,7 +117,10 @@ module.exports = {
 
     // === Rule for component definition ===
     // Allow using both function declaration and arrow functions for components
-    'react/function-component-definition': ['error', { namedComponents: ['function-declaration', 'arrow-function'] }],
+    'react/function-component-definition': [
+      'error',
+      { namedComponents: ['function-declaration', 'arrow-function'] },
+    ],
 
     // === Rule for import/no-extraneous-dependencies ===
     'import/no-extraneous-dependencies': [
@@ -125,28 +136,32 @@ module.exports = {
         ],
       },
     ],
-    'i18next/no-literal-string': ['error', { markupOnly: true, ignoreAttribute: ['to', 'target', 'path'] }],
+    'i18next/no-literal-string': [
+      'error',
+      { markupOnly: true, ignoreAttribute: ['to', 'target', 'path'] },
+    ],
+  },
+  globals: {
+    __IS_DEV__: true,
   },
   overrides: [
     {
       // Disable rules requiring type information for configuration files
       files: ['./.eslintrc.js', './webpack.config.ts', './config/**/*.ts'],
       parserOptions: {
-        project: null,
-      },
+      project: null,
+    },
       rules: {
-        'i18next/no-literal-string': 'off',
-        // airbnb-typescript replaces these base rules with type-aware variants.
-        // Type-aware rules crash when project: null, so restore the base rules.
-        '@typescript-eslint/dot-notation': 'off',
-        'dot-notation': 'error',
-        '@typescript-eslint/no-implied-eval': 'off',
-        'no-implied-eval': 'error',
-        '@typescript-eslint/no-throw-literal': 'off',
-        'no-throw-literal': 'error',
-        '@typescript-eslint/return-await': 'off',
-        'no-return-await': 'error',
-      },
+      'i18next/no-literal-string': 'off',
+      '@typescript-eslint/dot-notation': 'off',
+      'dot-notation': 'error',
+      '@typescript-eslint/no-implied-eval': 'off',
+      'no-implied-eval': 'error',
+      '@typescript-eslint/no-throw-literal': 'off',
+      'no-throw-literal': 'error',
+      '@typescript-eslint/return-await': 'off',
+      'no-return-await': 'error',
+    },
     },
   ],
 };

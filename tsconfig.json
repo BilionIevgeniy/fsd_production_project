@@ -54,8 +54,8 @@
     // Disallow inconsistently-cased references to the same file.
     "forceConsistentCasingInFileNames": true,
 
-    // Types for node.js
-    "types": ["node"]
+    // Types for the test environment (Jest)
+    "types": ["node", "jest"]
   },
 
   // Include source files and configuration files

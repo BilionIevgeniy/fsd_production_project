@@ -33,7 +33,7 @@ module.exports = {
   plugins: [
     'react',
     '@typescript-eslint',
-    'i18next', // Plugin for working with i18next
+    'i18next', // Plugin for working with i18next - checks for unused keys
     'prettier', // Prettier plugin for ESLint
   ],
   settings: {
@@ -131,6 +131,9 @@ module.exports = {
     {
       // Disable rules requiring type information for configuration files
       files: ['./.eslintrc.js', './webpack.config.ts', './config/**/*.ts'],
+      parserOptions: {
+        project: null,
+      },
       rules: {
         'i18next/no-literal-string': 'off',
       },

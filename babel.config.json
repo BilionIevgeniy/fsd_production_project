@@ -1,3 +1,4 @@
 {
+  // preset-typescript - handles TypeScript syntax for Babel
   "presets": ["@babel/preset-env", "@babel/preset-typescript"]
 }

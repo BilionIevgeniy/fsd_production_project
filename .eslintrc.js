@@ -1,5 +1,6 @@
 const path = require('path');
 
+// eslinter - configuration for ESLint
 module.exports = {
   // Define the environment in which the code will run
   env: {
@@ -7,7 +8,7 @@ module.exports = {
     es2021: true, // Adds all ECMAScript 2021 global variables
     jest: true, // Adds Jest global variables for testing
   },
-  // Configurations that extend the set of rules
+  // extend - configurations that extend the set of rules
   extends: [
     'eslint:recommended', // Basic recommended ESLint rules
     'plugin:react/recommended', // Recommended rules for React
@@ -31,25 +32,28 @@ module.exports = {
   },
   // Plugins that add extra rules or functionality
   plugins: [
-    'react',
-    '@typescript-eslint',
+    'react', // Plugin for React rules
+    '@typescript-eslint', // Plugin for TypeScript rules
     'i18next', // Plugin for working with i18next
     'prettier', // Prettier plugin for ESLint
   ],
+  // settings - additional configuration for plugins
   settings: {
     react: {
       version: 'detect', // Automatically detect React version
     },
     'import/resolver': {
+      // Configuration for import resolver
       typescript: {
         alwaysTryTypes: true, // Always try to resolve types from TypeScript
-        project: path.resolve(__dirname, 'tsconfig.json'),
+        project: path.resolve(__dirname, 'tsconfig.json'), // Path to tsconfig.json file
       },
       node: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        extensions: ['.js', '.jsx', '.ts', '.tsx'], // Extensions to resolve
       },
     },
   },
+  // rules - configuration for ESLint rules
   rules: {
     '@typescript-eslint/naming-convention': 'off',
     // === Formatting-related rules delegated to Prettier ===
@@ -70,10 +74,7 @@ module.exports = {
     // 'jsx-a11y/no-static-element-interactions': 'off', // Disable if there is a need to use click/keypress on non-interactive elements
     // 'jsx-a11y/click-events-have-key-events': 'off', // Disable if necessary
     'react/react-in-jsx-scope': 'off', // Disable for React 17+ (new JSX Transform)
-    'react/jsx-filename-extension': [
-      1,
-      { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
-    ], // Allow JSX in .ts and .tsx files
+    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }], // Allow JSX in .ts and .tsx files
     'import/extensions': [
       // Allow imports without specifying extensions for certain file types
       'error',
@@ -117,10 +118,7 @@ module.exports = {
 
     // === Rule for component definition ===
     // Allow using both function declaration and arrow functions for components
-    'react/function-component-definition': [
-      'error',
-      { namedComponents: ['function-declaration', 'arrow-function'] },
-    ],
+    'react/function-component-definition': ['error', { namedComponents: ['function-declaration', 'arrow-function'] }],
 
     // === Rule for import/no-extraneous-dependencies ===
     'import/no-extraneous-dependencies': [
@@ -136,32 +134,31 @@ module.exports = {
         ],
       },
     ],
-    'i18next/no-literal-string': [
-      'error',
-      { markupOnly: true, ignoreAttribute: ['to', 'target', 'path'] },
-    ],
+    'i18next/no-literal-string': ['error', { markupOnly: true, ignoreAttribute: ['to', 'target', 'path'] }],
   },
+  // globals - global variables
   globals: {
     __IS_DEV__: true,
   },
+  // overrides - additional configuration for specific files
   overrides: [
     {
       // Disable rules requiring type information for configuration files
       files: ['./.eslintrc.js', './webpack.config.ts', './config/**/*.ts'],
       parserOptions: {
-      project: null,
-    },
+        project: null,
+      },
       rules: {
-      'i18next/no-literal-string': 'off',
-      '@typescript-eslint/dot-notation': 'off',
-      'dot-notation': 'error',
-      '@typescript-eslint/no-implied-eval': 'off',
-      'no-implied-eval': 'error',
-      '@typescript-eslint/no-throw-literal': 'off',
-      'no-throw-literal': 'error',
-      '@typescript-eslint/return-await': 'off',
-      'no-return-await': 'error',
-    },
+        'i18next/no-literal-string': 'off',
+        '@typescript-eslint/dot-notation': 'off',
+        'dot-notation': 'error',
+        '@typescript-eslint/no-implied-eval': 'off',
+        'no-implied-eval': 'error',
+        '@typescript-eslint/no-throw-literal': 'off',
+        'no-throw-literal': 'error',
+        '@typescript-eslint/return-await': 'off',
+        'no-return-await': 'error',
+      },
     },
   ],
 };

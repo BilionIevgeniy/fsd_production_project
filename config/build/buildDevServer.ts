@@ -11,5 +11,8 @@ export const buildDevServer = (options: BuildOptions): Configuration => {
     historyApiFallback: true,
     // hot - force reload page without refresh when changes in files occur
     hot: true,
+    client: {
+      overlay: false,
+    },
   };
 };

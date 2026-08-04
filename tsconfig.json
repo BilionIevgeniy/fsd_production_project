@@ -1,3 +1,4 @@
+// tsconfig for TypeScript compiler
 {
   "compilerOptions": {
     // Instructs the TypeScript compiler how to compile .ts files.

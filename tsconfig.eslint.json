@@ -1,9 +1,5 @@
+// tsconfig for ESLint
 {
   "extends": "./tsconfig.json",
-  "include": [
-    "src/**/*",
-    "webpack.config.ts", 
-    "config/**/*",
-    ".eslintrc.js"
-  ]
+  "include": ["src/**/*", "webpack.config.ts", "config/**/*", ".eslintrc.js"]
 }

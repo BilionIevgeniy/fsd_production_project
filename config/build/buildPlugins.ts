@@ -2,10 +2,11 @@ import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { BuildOptions } from './types/config';
 
 export const buildPlugins = (options: BuildOptions): webpack.WebpackPluginInstance[] => {
-  const { paths, isDev } = options;
+  const { paths, isDev, analyze } = options;
 
   const plugins = [
     // HtmlWebpackPlugin - generate HTML file with injected scripts and styles
@@ -28,6 +29,10 @@ export const buildPlugins = (options: BuildOptions): webpack.WebpackPluginInstan
   if (isDev) {
     plugins.push(new ReactRefreshWebpackPlugin({ overlay: false }));
     plugins.push(new webpack.HotModuleReplacementPlugin());
+  }
+
+  if (analyze) {
+    plugins.push(new BundleAnalyzerPlugin());
   }
 
   return plugins;

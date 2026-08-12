@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { useTheme } from 'shared/config/theme';
-import { classNames } from 'shared/lib/classNames';
+import { classNames } from 'shared/lib/classNames/classNames';
 import { Loader } from '../shared/ui';
 import { Navbar } from '../widgets/Navbar';
 import { Sidebar } from '../widgets/Sidebar';

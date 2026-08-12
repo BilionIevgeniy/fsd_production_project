@@ -31,7 +31,11 @@ export default {
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   moduleNameMapper: {
     '\\.(scss|sass|css)$': 'identity-obj-proxy',
+    '\\.svg$': '<rootDir>/config/jest/svgMock.tsx',
   },
+
+  // A list of paths to modules that run some code to configure or set up the testing framework before each test
+  setupFilesAfterEnv: ['<rootDir>/config/jest/jest.setup.ts'],
 
   // All imported modules in your tests should be mocked automatically
   // automock: false,
@@ -126,9 +130,6 @@ export default {
 
   // The paths to modules that run some code to configure or set up the testing environment before each test
   // setupFiles: [],
-
-  // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  setupFilesAfterEnv: ['<rootDir>/config/jest/jest.setup.ts'],
 
   // The number of seconds after which a test is considered as slow and reported as such in the results.
   // slowTestThreshold: 5,

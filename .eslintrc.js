@@ -129,6 +129,7 @@ module.exports = {
           './webpack.config.ts', // Allow for root Webpack config
           '**/.storybook/**', // Allow for Storybook configs
           '**/config/**', // all files in config folder (webpack, jest, storybook)
+          '**/tests/**', // test helpers/utilities that live outside *.test.tsx files
           '**/*.test.{ts,tsx}', // all test files
           '**/*.stories.{ts,tsx}', // all story files for storybook
         ],

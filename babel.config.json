@@ -1,8 +1,7 @@
 {
-  // preset-typescript - handles TypeScript syntax for Babel
   "presets": [
-    "@babel/preset-env",
-    "@babel/preset-typescript",
-    ["@babel/preset-react", { "runtime": "automatic" }]
+    ["@babel/preset-env", { "targets": { "node": "current" } }], // modern JS in old, targets current Node since this config is used only by Jest
+    "@babel/preset-typescript", // remove all ts that browser dont understand
+    ["@babel/preset-react", { "runtime": "automatic" }] // understand JSX
   ]
 }

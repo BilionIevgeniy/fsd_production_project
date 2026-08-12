@@ -160,5 +160,12 @@ module.exports = {
         'no-return-await': 'error',
       },
     },
+    {
+      // Test files render fixture text, not user-facing copy that needs translation
+      files: ['**/*.test.{ts,tsx}'],
+      rules: {
+        'i18next/no-literal-string': 'off',
+      },
+    },
   ],
 };

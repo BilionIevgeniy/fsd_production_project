@@ -145,13 +145,14 @@ module.exports = {
   overrides: [
     {
       // Disable rules requiring type information for configuration files
-      files: ['./.eslintrc.js', './webpack.config.ts', './config/**/*.ts'],
+      files: ['./.eslintrc.js', './webpack.config.ts', './config/**/*.{ts,js}'],
       parserOptions: {
         project: null,
       },
       rules: {
         'i18next/no-literal-string': 'off',
         '@typescript-eslint/no-var-requires': 'off', // these files are plain CommonJS, loaded via require()
+        'no-param-reassign': 'off', // webpackFinal/config mutation is the documented Storybook/webpack pattern
         '@typescript-eslint/dot-notation': 'off',
         'dot-notation': 'error',
         '@typescript-eslint/no-implied-eval': 'off',

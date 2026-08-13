@@ -151,6 +151,7 @@ module.exports = {
       },
       rules: {
         'i18next/no-literal-string': 'off',
+        '@typescript-eslint/no-var-requires': 'off', // these files are plain CommonJS, loaded via require()
         '@typescript-eslint/dot-notation': 'off',
         'dot-notation': 'error',
         '@typescript-eslint/no-implied-eval': 'off',

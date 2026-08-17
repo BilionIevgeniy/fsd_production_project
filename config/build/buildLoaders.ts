@@ -1,6 +1,7 @@
 import webpack from 'webpack';
 import { BuildOptions } from './types/config';
 import { buildCssLoader } from '../loaders/cssLoader';
+import { buildSvgLoader } from '../loaders/svgLoader';
 
 export const buildLoaders = (options: BuildOptions): webpack.RuleSetRule[] => {
   // order matters! webpack processes loaders from bottom to top
@@ -16,10 +17,7 @@ export const buildLoaders = (options: BuildOptions): webpack.RuleSetRule[] => {
   const scssLoader = buildCssLoader(options.isDev);
 
   // SVG loader for SVG files - converts SVG to React components
-  const svgLoader = {
-    test: /\.svg$/i,
-    use: ['@svgr/webpack'],
-  };
+  const svgLoader = buildSvgLoader();
 
   // File loader for other file types (images, fonts, etc.)
   const fileLoader = {

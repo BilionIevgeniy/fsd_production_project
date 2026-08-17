@@ -1,6 +1,8 @@
 import path from 'path';
 import type { StorybookConfig } from '@storybook/core-common';
+import type { RuleSetRule } from 'webpack';
 import { buildCssLoader } from '../loaders/cssLoader';
+import { buildSvgLoader } from '../loaders/svgLoader';
 
 const storybookConfig: StorybookConfig = {
   stories: ['../../src/**/*.stories.mdx', '../../src/**/*.stories.@(js|jsx|ts|tsx)'],
@@ -23,10 +25,24 @@ const storybookConfig: StorybookConfig = {
       modules: [path.resolve(__dirname, '../../src'), 'node_modules'],
     };
 
-    // Same CSS Modules setup as the scssLoader in config/build/buildLoaders.ts.
+    // Storybook's own webpack5 preset already ships a rule that sends .svg
+    // through asset/resource (emits a file, imports resolve to a URL string) —
+    // that's what was turning `import Icon from '*.svg'` into a plain path
+    // and blowing up `<Icon />` with "createElement: invalid tag name".
+    // Exclude .svg from it so our svgLoader (below) is the only one handling it.
+    const rules = config.module?.rules ?? [];
+    const defaultSvgRule = rules.find(
+      (rule): rule is RuleSetRule =>
+        !!rule && typeof rule === 'object' && rule.test instanceof RegExp && rule.test.test('.svg'),
+    );
+    if (defaultSvgRule) {
+      defaultSvgRule.exclude = /\.svg$/i;
+    }
+
+    // Same CSS Modules and SVG-as-React-component setup as config/build/buildLoaders.ts.
     config.module = {
       ...config.module,
-      rules: [...(config.module?.rules ?? []), buildCssLoader(true)],
+      rules: [...rules, buildCssLoader(true), buildSvgLoader()],
     };
 
     return config;

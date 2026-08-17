@@ -15,4 +15,4 @@ export const parameters = {
 
 // These decorators are applied to every story.
 addDecorator(StyleDecorator);
-addDecorator(ThemeDecorator(Theme.DARK));
+addDecorator(ThemeDecorator(Theme.NORMAL));

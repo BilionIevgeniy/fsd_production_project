@@ -118,7 +118,10 @@ module.exports = {
 
     // === Rule for component definition ===
     // Allow using both function declaration and arrow functions for components
-    'react/function-component-definition': ['error', { namedComponents: ['function-declaration', 'arrow-function'] }],
+    'react/function-component-definition': [
+      'error',
+      { namedComponents: ['function-declaration', 'arrow-function'], unnamedComponents: 'arrow-function' },
+    ],
 
     // === Rule for import/no-extraneous-dependencies ===
     'import/no-extraneous-dependencies': [

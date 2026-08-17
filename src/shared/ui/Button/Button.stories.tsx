@@ -1,4 +1,6 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { ThemeDecorator } from 'shared/config/storybook/ThemeDecorator/ThemeDecorator';
+import { Theme } from 'shared/config/theme';
 import { Button, ThemeButton } from './Button';
 
 export default {
@@ -16,9 +18,10 @@ Clear.args = {
   children: 'Button',
   theme: ThemeButton.CLEAR,
 };
+Clear.decorators = [ThemeDecorator(Theme.NORMAL)];
 
-export const Disabled = Template.bind({});
-Disabled.args = {
+export const Outline = Template.bind({});
+Outline.args = {
   children: 'Button',
-  disabled: true,
+  theme: ThemeButton.OUTLINE,
 };

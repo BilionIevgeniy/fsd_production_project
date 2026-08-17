@@ -1,6 +1,6 @@
 import webpack from 'webpack';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { BuildOptions } from './types/config';
+import { buildCssLoader } from '../loaders/cssLoader';
 
 export const buildLoaders = (options: BuildOptions): webpack.RuleSetRule[] => {
   // order matters! webpack processes loaders from bottom to top
@@ -13,27 +13,7 @@ export const buildLoaders = (options: BuildOptions): webpack.RuleSetRule[] => {
   };
 
   // SCSS loader for styling
-  const scssLoader = {
-    test: /\.s[ac]ss$/i,
-    use: [
-      // Creates `style` nodes from JS strings
-      options.isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
-      // Translates CSS into CommonJS
-      {
-        loader: 'css-loader',
-        options: {
-          modules: {
-            mode: 'local',
-            // auto - automatically apply unique class names to files with .module.* extension
-            auto: (resourcePath: string) => resourcePath.endsWith('.module.scss'),
-            localIdentName: options.isDev ? '[name]__[local]__[hash:base64:5]' : '[hash:base64:8]',
-          },
-        },
-      },
-      // Compiles Sass to CSS
-      'sass-loader',
-    ],
-  };
+  const scssLoader = buildCssLoader(options.isDev);
 
   // SVG loader for SVG files - converts SVG to React components
   const svgLoader = {

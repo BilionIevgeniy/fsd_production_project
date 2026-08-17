@@ -55,6 +55,10 @@
     // Disallow inconsistently-cased references to the same file.
     "forceConsistentCasingInFileNames": true,
 
+    // Skip type-checking of .d.ts files in node_modules — some (e.g. @storybook/core-common@6.4.19)
+    // ship declarations incompatible with newer TS versions; doesn't affect checking of our own code.
+    "skipLibCheck": true,
+
     // Types for the test environment (Jest)
     "types": ["node", "jest"]
   },

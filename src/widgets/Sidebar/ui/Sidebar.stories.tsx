@@ -1,13 +1,12 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { ThemeDecorator } from 'shared/config/storybook/ThemeDecorator/ThemeDecorator';
-import { TranslationDecorator } from 'shared/config/storybook/TranslationDecorator/TranslationDecorator';
+import { ThemeDecorator, TranslationDecorator, ContentPageDecorator } from 'shared/config/storybook';
 import { Theme } from 'shared/config/theme';
 import { Sidebar } from './Sidebar';
 
 export default {
   title: 'widgets/Sidebar',
   component: Sidebar,
-  decorators: [TranslationDecorator],
+  decorators: [TranslationDecorator, ContentPageDecorator],
 } as ComponentMeta<typeof Sidebar>;
 
 const Template: ComponentStory<typeof Sidebar> = (args) => <Sidebar {...args} />;

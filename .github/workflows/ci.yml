@@ -1,0 +1,101 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Cancel superseded runs on the same branch/PR so pushes don't queue up.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: '17.4.0'
+
+jobs:
+  lint:
+    name: Lint (ts + scss)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      # --legacy-peer-deps: stylelint-config-prettier@9 declares a peer range
+      # (stylelint <15) older than the stylelint@17 actually installed here.
+      # Matches how this repo is installed locally (see npm install output).
+      - run: npm ci --legacy-peer-deps
+      - run: npm run lint:ts
+      - run: npm run lint:scss
+
+  unit-test:
+    name: Unit tests (jest)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci --legacy-peer-deps
+      - run: npm run test:unit
+
+  build:
+    name: Build (webpack + storybook)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci --legacy-peer-deps
+      - run: npm run build:prod
+      - run: npm run build-storybook
+
+  visual-test:
+    name: Screenshot tests (loki)
+    runs-on: ubuntu-latest
+    # Fail fast on the cheaper checks before spending time on Storybook + Docker Chrome.
+    needs: [lint, unit-test, build]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci --legacy-peer-deps
+
+      - name: Start Storybook
+        run: npx start-storybook -p 6006 -c config/storybook --ci &
+
+      - name: Wait for Storybook to be ready
+        run: |
+          for i in $(seq 1 60); do
+            if curl -sf http://localhost:6006 > /dev/null; then
+              echo "Storybook is up"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "Storybook did not start in time" >&2
+          exit 1
+
+      # loki's config in package.json uses target: chrome.docker, which runs
+      # Chrome inside a Docker container loki manages itself (Docker is
+      # preinstalled on GitHub-hosted runners, and these are amd64 like the
+      # image loki pulls — no emulation involved, unlike Apple Silicon).
+      - run: npm run test:ui
+
+      - name: Upload loki diff on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: loki-diff
+          path: |
+            .loki/current
+            .loki/difference
+          retention-days: 14

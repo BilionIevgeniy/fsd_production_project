@@ -11,9 +11,6 @@ concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  NODE_VERSION: '17.4.0'
-
 jobs:
   lint:
     name: Lint (ts + scss)
@@ -22,7 +19,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version-file: '.nvmrc'
           cache: npm
       # --legacy-peer-deps: stylelint-config-prettier@9 declares a peer range
       # (stylelint <15) older than the stylelint@17 actually installed here.
@@ -38,7 +35,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version-file: '.nvmrc'
           cache: npm
       - run: npm ci --legacy-peer-deps
       - run: npm run test:unit
@@ -50,7 +47,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version-file: '.nvmrc'
           cache: npm
       - run: npm ci --legacy-peer-deps
       - run: npm run build:prod
@@ -65,7 +62,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version-file: '.nvmrc'
           cache: npm
       - run: npm ci --legacy-peer-deps
 

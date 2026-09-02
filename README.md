@@ -68,19 +68,20 @@ Serves the app at `http://localhost:4200`.
 
 ## 📜 Available Scripts
 
-| Script                                | What it does                                                                   |
-| ------------------------------------- | ------------------------------------------------------------------------------ |
-| `npm start`                           | Dev server with hot reload (port 4200)                                         |
-| `npm run build:dev`                   | Development build                                                              |
-| `npm run build:prod`                  | Production build                                                               |
-| `npm run build:prod:analyze`          | Production build + bundle analyzer                                             |
-| `npm run lint:ts` / `lint:ts:fix`     | ESLint for `.ts`/`.tsx`                                                        |
-| `npm run lint:scss` / `lint:scss:fix` | Stylelint for `.scss`                                                          |
-| `npm run test:unit`                   | Unit tests (Jest)                                                              |
-| `npm run storybook`                   | Storybook dev server (port 6006)                                               |
-| `npm run build-storybook`             | Static Storybook build                                                         |
-| `npm run test:ui`                     | Visual regression tests (Loki) — compares current UI against `.loki/reference` |
-| `npm run test:ui:ok`                  | Approve the current UI as the new baseline (`loki approve`)                    |
+| Script                                | What it does                                                                    |
+| ------------------------------------- | ------------------------------------------------------------------------------- |
+| `npm start`                           | Dev server with hot reload (port 4200)                                          |
+| `npm run build:dev`                   | Development build                                                               |
+| `npm run build:prod`                  | Production build                                                                |
+| `npm run build:prod:analyze`          | Production build + bundle analyzer                                              |
+| `npm run lint:ts` / `lint:ts:fix`     | ESLint for `.ts`/`.tsx`                                                         |
+| `npm run lint:scss` / `lint:scss:fix` | Stylelint for `.scss`                                                           |
+| `npm run test:unit`                   | Unit tests (Jest)                                                               |
+| `npm run storybook`                   | Storybook dev server (port 6006)                                                |
+| `npm run build-storybook`             | Static Storybook build                                                          |
+| `npm run test:ui`                     | Visual regression tests (Loki) — compares current UI against `.loki/reference`  |
+| `npm run test:ui:ok`                  | Approve the current UI as the new baseline (`loki approve`)                     |
+| `npm run test:ui:report`              | Build a browsable HTML report (`.loki/report.html`) of the last `test:ui` diffs |
 
 ---
 
@@ -134,6 +135,15 @@ Every shared/widget/page component that's meaningfully reusable in isolation sho
 - `npm run test:ui` — starts by comparing the current UI to `.loki/reference` and fails on any mismatch.
 - On a failure, open `.loki/difference/<name>.png` to see exactly what changed.
 - `npm run test:ui:ok` — accept the current output as the new baseline (`loki approve`), when the diff is an _intentional_ visual change.
+
+Opening PNGs one by one in `.loki/difference/` doesn't scale once more than a couple of stories fail. `npm run test:ui:report` builds a single browsable page instead:
+
+```bash
+npm run test:ui         # populates .loki/current and .loki/difference
+npm run test:ui:report  # -> .loki/report.html
+```
+
+It runs [`scripts/generate-visual-json-report.js`](scripts/generate-visual-json-report.js) — which turns the contents of `.loki/difference/` into `.loki/report.json` — through `reg-cli` (already in `devDependencies`), which renders that JSON as `.loki/report.html`: a side-by-side reference/current/diff view for every failed story on one page. Open the file directly in a browser. It must stay inside `.loki/` — the image paths inside the report are relative to wherever the report file itself lives, so moving it elsewhere breaks the images.
 
 **Engine note:** `package.json`'s `loki` config targets `chrome.docker` (Loki runs Chrome inside a Docker container it manages). That's reliable on `amd64` (GitHub Actions runners), but on **Apple Silicon** the amd64 image needs QEMU emulation and hits a known `runc` incompatibility. If you're on an M-series Mac, don't fight this locally — use the **Update Loki baseline** GitHub Action below, which runs on a matching `amd64` runner.
 

@@ -32,6 +32,28 @@
   justify-content: center;
   align-items: center;
   gap: 1rem;
+  transition: gap 0.3s ease;
+}
+
+.linkText {
+  max-width: 130px;
+  overflow: hidden;
+  white-space: nowrap;
+  opacity: 1;
+  transition: max-width 0.3s ease, opacity 0.3s ease;
+}
+
+.collapsed .link {
+  gap: 0;
+}
+
+.collapsed .linkText {
+  max-width: 0;
+  opacity: 0;
+}
+
+.icon {
+  fill: var(--secondary-color);
 }
 
 .switchers {

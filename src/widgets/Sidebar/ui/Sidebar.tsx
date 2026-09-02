@@ -21,12 +21,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
     <div className={classNames(cls.Sidebar, { [cls.collapsed]: collapsed }, [className])}>
       <div className={cls.linkItems}>
         <AppLink className={cls.link} to={RoutePaths.main}>
-          <AboutIcon />
-          {!collapsed && t('nav_home')}
+          <AboutIcon className={cls.icon} />
+          <span className={cls.linkText}>{t('nav_home')}</span>
         </AppLink>
         <AppLink className={cls.link} to={RoutePaths.about}>
-          <MainIcon />
-          {!collapsed && t('nav_about')}
+          <MainIcon className={cls.icon} />
+          <span className={cls.linkText}>{t('nav_about')}</span>
         </AppLink>
       </div>
       <Button

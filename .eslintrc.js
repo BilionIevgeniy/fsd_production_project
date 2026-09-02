@@ -138,7 +138,10 @@ module.exports = {
         ],
       },
     ],
-    'i18next/no-literal-string': ['error', { markupOnly: true, ignoreAttribute: ['to', 'target', 'path'] }],
+    'i18next/no-literal-string': [
+      'error',
+      { markupOnly: true, ignoreAttribute: ['to', 'target', 'path', 'data-testid', 'ref'] },
+    ],
   },
   // globals - global variables
   globals: {

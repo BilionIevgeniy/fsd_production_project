@@ -16,7 +16,8 @@
     "build-storybook": "build-storybook -c config/storybook",
     "test:unit": "jest --config ./config/jest/jest.config.ts",
     "test:ui": "npx loki test",
-    "test:ui:ok": "npx loki approve"
+    "test:ui:ok": "npx loki approve",
+    "test:ui:report": "node scripts/generate-visual-json-report.js && reg-cli -F .loki/report.json -R .loki/report.html"
   },
   "keywords": [],
   "author": "",

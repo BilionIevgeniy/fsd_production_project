@@ -12,6 +12,28 @@
   transition: width 0.3s ease;
 }
 
+.collapseBtn {
+  position: absolute;
+  right: -40px;
+  bottom: 40px;
+}
+
+.linkItems {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 1rem;
+  margin-top: 0;
+  margin-left: 30px;
+}
+
+.link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
 .switchers {
   position: absolute;
   bottom: 8px;

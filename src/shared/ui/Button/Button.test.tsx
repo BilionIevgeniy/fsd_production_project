@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Button, ThemeButton } from './Button';
+import { Button, ButtonTheme } from './Button';
 
 describe('Button', () => {
   test('renders children', () => {
@@ -14,7 +14,7 @@ describe('Button', () => {
 
   test('applies the default theme class', () => {
     render(<Button>Click me</Button>);
-    expect(screen.getByRole('button')).toHaveClass(ThemeButton.CLEAR);
+    expect(screen.getByRole('button')).toHaveClass(ButtonTheme.CLEAR);
   });
 
   test('applies a custom className', () => {

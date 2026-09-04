@@ -2,9 +2,16 @@ import { ThemeContext } from 'shared/config/theme/ThemeContext';
 import { LOCAL_STORAGE_THEME_KEY, Theme } from 'shared/config/theme/types';
 import { FC, useCallback, useMemo, useState } from 'react';
 
-export const ThemeProvider: FC = ({ children }) => {
+interface ThemeProviderProps {
+  // Pins the starting theme instead of reading localStorage — used by
+  // Storybook's ThemeContextDecorator so a dark-theme story doesn't depend
+  // on whatever the browser's localStorage happens to hold.
+  initialTheme?: Theme;
+}
+
+export const ThemeProvider: FC<ThemeProviderProps> = ({ children, initialTheme }) => {
   const [theme, setTheme] = useState<Theme>(
-    () => (localStorage.getItem(LOCAL_STORAGE_THEME_KEY) as Theme) || Theme.NORMAL,
+    () => initialTheme ?? ((localStorage.getItem(LOCAL_STORAGE_THEME_KEY) as Theme) || Theme.NORMAL),
   );
 
   const toggleTheme = useCallback(() => {

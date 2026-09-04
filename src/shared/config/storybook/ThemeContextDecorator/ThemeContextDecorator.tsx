@@ -1,30 +1,28 @@
-import { useCallback, useMemo, useState } from 'react';
 import { Story } from '@storybook/react';
-import { ThemeContext } from 'shared/config/theme/ThemeContext';
-import { Theme } from 'shared/config/theme';
+import { ThemeProvider } from 'app/providers/ThemeProvider';
+import { classNames } from 'shared/lib/classNames/classNames';
+import { Theme, useTheme } from 'shared/config/theme';
 
-// For stories whose component reads the theme via useTheme() itself (e.g.
-// ThemeSwitcher) rather than only being restyled by the CSS class
-// ThemeDecorator applies. Keeps live state so clicking a toggle button in
-// the story actually flips both the context value and the "app <theme>"
-// class together — the same pairing app/providers/ThemeProvider + app/App.tsx
-// do for the real app — instead of the class staying frozen at story mount.
-function ThemeContextStory({ initialTheme, StoryComponent }: { initialTheme: Theme; StoryComponent: Story }) {
-  const [theme, setTheme] = useState(initialTheme);
-  const toggleTheme = useCallback(() => {
-    setTheme((current) => (current === Theme.DARK ? Theme.NORMAL : Theme.DARK));
-  }, []);
-  const contextValue = useMemo(() => ({ theme, toggleTheme }), [theme, toggleTheme]);
-
+// Mirrors what app/App.tsx does for the real app: read the current theme
+// from context and apply it as the "app <theme>" class on the wrapper div.
+// Needed so a story's own toggle button (e.g. ThemeSwitcher) flips the class
+// that's actually rendered, not just a context value nothing reads.
+function AppThemeRoot({ StoryComponent }: { StoryComponent: Story }) {
+  const { theme } = useTheme();
   return (
-    <ThemeContext.Provider value={contextValue}>
-      <div className={`app ${theme}`}>
-        <StoryComponent />
-      </div>
-    </ThemeContext.Provider>
+    <div className={classNames('app', {}, [theme])}>
+      <StoryComponent />
+    </div>
   );
 }
 
+// For stories whose component reads the theme via useTheme() itself (e.g.
+// ThemeSwitcher) rather than only being restyled by the CSS class
+// ThemeDecorator applies. Wraps the real ThemeProvider (pinned to
+// initialTheme) instead of re-implementing its state/toggle logic, so the
+// story exercises the same provider code the app actually ships.
 export const ThemeContextDecorator = (initialTheme: Theme) => (StoryComponent: Story) => (
-  <ThemeContextStory initialTheme={initialTheme} StoryComponent={StoryComponent} />
+  <ThemeProvider initialTheme={initialTheme}>
+    <AppThemeRoot StoryComponent={StoryComponent} />
+  </ThemeProvider>
 );

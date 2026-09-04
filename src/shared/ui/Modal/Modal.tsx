@@ -16,7 +16,7 @@ interface ModalProps {
 // Kept in sync with the transition duration in Modal.module.scss.
 const ANIMATION_DELAY = 300;
 
-export const Modal = ({ className = '', children, isOpen = true, onClose, lazy = false }: ModalProps) => {
+export const Modal = ({ className = '', children, isOpen = true, onClose, lazy = true }: ModalProps) => {
   const [isClosing, setIsClosing] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout>>();

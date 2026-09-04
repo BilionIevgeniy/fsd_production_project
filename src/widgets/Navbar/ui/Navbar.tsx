@@ -21,7 +21,7 @@ export function Navbar({ className = '' }: NavbarProps) {
   return (
     <div className={classNames(cls.Navbar, {}, [className])}>
       <div className={cls.navbarLinks}>
-        <Button theme={ButtonTheme.CLEAR} onClick={openAuthModal}>
+        <Button theme={ButtonTheme.CLEAR_INVERTED} onClick={openAuthModal}>
           {t('Login')}
         </Button>
       </div>

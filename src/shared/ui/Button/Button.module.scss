@@ -15,6 +15,18 @@
   outline: none;
 }
 
+// Same transparent/borderless look as .clear, but using the inverted color
+// pair — for placing a "clear" button on a surface that already uses
+// --inverted-bg-color (e.g. Navbar), where --primary-color text would have
+// poor contrast.
+.clearInverted {
+  padding: 0;
+  border: none;
+  color: var(--inverted-primary-color);
+  background: none;
+  outline: none;
+}
+
 .outline {
   border: 1px solid var(--primary-color);
   color: var(--primary-color);

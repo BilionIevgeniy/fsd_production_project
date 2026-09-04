@@ -123,6 +123,29 @@ module.exports = {
       { namedComponents: ['function-declaration', 'arrow-function'], unnamedComponents: 'arrow-function' },
     ],
 
+    // === React Hooks rules ===
+    // plugin:react-hooks/recommended sets this to 'warn'; raised to 'error' so a
+    // useEffect/useMemo/useCallback with a stale or missing dependency fails the
+    // build instead of being easy to miss in a warnings list.
+    'react-hooks/exhaustive-deps': 'error',
+    // airbnb's default allows inline arrow functions in JSX (allowArrowFunctions: true),
+    // which is exactly the case that needs memoizing: a new function identity every
+    // render, handed to a component that may re-render or re-subscribe an effect
+    // because of it. Tightened to require a stable reference (useCallback, or a
+    // function defined outside render) for any custom component prop. Native DOM
+    // elements (button, div, ...) stay exempt via ignoreDOMComponents — a plain
+    // onClick={() => ...} there has no such consumer to worry about.
+    'react/jsx-no-bind': [
+      'error',
+      {
+        ignoreRefs: true,
+        allowArrowFunctions: false,
+        allowFunctions: false,
+        allowBind: false,
+        ignoreDOMComponents: true,
+      },
+    ],
+
     // === Rule for import/no-extraneous-dependencies ===
     'import/no-extraneous-dependencies': [
       'error',

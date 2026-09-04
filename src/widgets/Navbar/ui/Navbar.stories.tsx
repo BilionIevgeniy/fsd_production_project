@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { ThemeDecorator, TranslationDecorator } from 'shared/config/storybook';
+import { ThemeContextDecorator, TranslationDecorator } from 'shared/config/storybook';
 import { Theme } from 'shared/config/theme';
 import { Navbar } from './Navbar';
 
@@ -14,4 +14,4 @@ const Template: ComponentStory<typeof Navbar> = (args) => <Navbar {...args} />;
 export const Normal = Template.bind({});
 
 export const Dark = Template.bind({});
-Dark.decorators = [ThemeDecorator(Theme.DARK)];
+Dark.decorators = [ThemeContextDecorator(Theme.DARK)];

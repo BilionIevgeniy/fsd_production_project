@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { ThemeDecorator } from 'shared/config/storybook';
+import { ThemeContextDecorator } from 'shared/config/storybook';
 import { Theme } from 'shared/config/theme';
 import { Modal } from './Modal';
 
@@ -24,7 +24,7 @@ OpenedDark.args = {
   isOpen: true,
   children: 'Modal content',
 };
-OpenedDark.decorators = [ThemeDecorator(Theme.DARK)];
+OpenedDark.decorators = [ThemeContextDecorator(Theme.DARK)];
 
 // lazy=false so the (hidden) markup is actually there to look at — with the
 // lazy default, a never-opened modal renders nothing.

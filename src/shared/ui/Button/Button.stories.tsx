@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { ThemeDecorator } from 'shared/config/storybook';
+import { ThemeContextDecorator } from 'shared/config/storybook';
 import { Theme } from 'shared/config/theme';
 import { Button, ButtonTheme, ButtonSize } from './Button';
 
@@ -24,7 +24,7 @@ ClearDark.args = {
   children: 'Button',
   theme: ButtonTheme.CLEAR,
 };
-ClearDark.decorators = [ThemeDecorator(Theme.DARK)];
+ClearDark.decorators = [ThemeContextDecorator(Theme.DARK)];
 
 export const ClearInvertedNormal = Template.bind({});
 ClearInvertedNormal.args = {
@@ -37,7 +37,7 @@ ClearInvertedDark.args = {
   children: 'Button',
   theme: ButtonTheme.CLEAR_INVERTED,
 };
-ClearInvertedDark.decorators = [ThemeDecorator(Theme.DARK)];
+ClearInvertedDark.decorators = [ThemeContextDecorator(Theme.DARK)];
 
 export const OutlineNormal = Template.bind({});
 OutlineNormal.args = {
@@ -50,7 +50,7 @@ OutlineDark.args = {
   children: 'Button',
   theme: ButtonTheme.OUTLINE,
 };
-OutlineDark.decorators = [ThemeDecorator(Theme.DARK)];
+OutlineDark.decorators = [ThemeContextDecorator(Theme.DARK)];
 
 export const BackgroundNormal = Template.bind({});
 BackgroundNormal.args = {
@@ -63,7 +63,7 @@ BackgroundDark.args = {
   children: 'Button',
   theme: ButtonTheme.BACKGROUND,
 };
-BackgroundDark.decorators = [ThemeDecorator(Theme.DARK)];
+BackgroundDark.decorators = [ThemeContextDecorator(Theme.DARK)];
 
 export const BackgroundInvertedNormal = Template.bind({});
 BackgroundInvertedNormal.args = {
@@ -76,7 +76,7 @@ BackgroundInvertedDark.args = {
   children: 'Button',
   theme: ButtonTheme.BACKGROUND_INVERTED,
 };
-BackgroundInvertedDark.decorators = [ThemeDecorator(Theme.DARK)];
+BackgroundInvertedDark.decorators = [ThemeContextDecorator(Theme.DARK)];
 
 // Renders all three sizes side by side so they can be compared at a glance,
 // rather than exploding into a Size × Theme × Normal/Dark story per combo.

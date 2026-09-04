@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { ThemeDecorator } from 'shared/config/storybook';
+import { ThemeContextDecorator } from 'shared/config/storybook';
 import { Theme } from 'shared/config/theme';
 import { AppLink, AppLinkTheme } from './AppLink';
 
@@ -25,7 +25,7 @@ PrimaryDark.args = {
   children: 'Link',
   theme: AppLinkTheme.PRIMARY,
 };
-PrimaryDark.decorators = [ThemeDecorator(Theme.DARK)];
+PrimaryDark.decorators = [ThemeContextDecorator(Theme.DARK)];
 
 export const InvertedNormal = Template.bind({});
 InvertedNormal.args = {
@@ -38,4 +38,4 @@ InvertedDark.args = {
   children: 'Link',
   theme: AppLinkTheme.INVERTED,
 };
-InvertedDark.decorators = [ThemeDecorator(Theme.DARK)];
+InvertedDark.decorators = [ThemeContextDecorator(Theme.DARK)];

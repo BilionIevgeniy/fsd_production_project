@@ -1,5 +1,5 @@
 import { classNames } from 'shared/lib/classNames/classNames';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ThemeSwitcher } from 'features/ThemeSwitcher';
 import { LangSwitcher } from 'features/LangSwitcher';
@@ -17,6 +17,11 @@ interface SidebarProps {
 export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
   const [collapsed, setCollapsed] = useState(false);
   const { t } = useTranslation();
+
+  // Passed to the custom Button component below, so react/jsx-no-bind
+  // requires a stable reference here rather than an inline arrow.
+  const toggleCollapsed = useCallback(() => setCollapsed((prev) => !prev), []);
+
   return (
     <div className={classNames(cls.Sidebar, { [cls.collapsed]: collapsed }, [className])}>
       <div className={cls.linkItems}>
@@ -33,7 +38,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
         theme={ButtonTheme.BACKGROUND_INVERTED}
         className={cls.collapseBtn}
         data-testid="sidebar-toggle"
-        onClick={() => setCollapsed(!collapsed)}
+        onClick={toggleCollapsed}
         square
         size={ButtonSize.L}
       >

@@ -9,6 +9,9 @@ export default {
   argTypes: {
     onClose: { action: 'closed' },
   },
+  // Modal renders via Portal into document.body, outside #root — loki's default
+  // chromeSelector only looks at #root's children, so widen it to the whole page.
+  parameters: { loki: { chromeSelector: 'body' } },
 } as ComponentMeta<typeof Modal>;
 
 const Template: ComponentStory<typeof Modal> = (args) => <Modal {...args} />;

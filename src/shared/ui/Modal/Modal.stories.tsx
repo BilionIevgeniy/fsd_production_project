@@ -18,6 +18,7 @@ OpenedNormal.args = {
   isOpen: true,
   children: 'Modal content',
 };
+OpenedNormal.decorators = [ThemeContextDecorator(Theme.NORMAL)];
 
 export const OpenedDark = Template.bind({});
 OpenedDark.args = {
@@ -25,12 +26,3 @@ OpenedDark.args = {
   children: 'Modal content',
 };
 OpenedDark.decorators = [ThemeContextDecorator(Theme.DARK)];
-
-// lazy=false so the (hidden) markup is actually there to look at — with the
-// lazy default, a never-opened modal renders nothing.
-export const Closed = Template.bind({});
-Closed.args = {
-  isOpen: false,
-  lazy: false,
-  children: 'Modal content',
-};

@@ -13,9 +13,9 @@ describe('Navbar', () => {
     expect(screen.getByRole('button', { name: 'Login' })).toBeInTheDocument();
   });
 
-  test('the auth modal is not in the DOM before the Login button is clicked', () => {
+  test('the auth modal is not open before the Login button is clicked', () => {
     renderWithTranslation(<Navbar />);
-    expect(screen.queryByText('Login form')).not.toBeInTheDocument();
+    expect(document.querySelector('.opened')).not.toBeInTheDocument();
   });
 
   test('clicking Login opens the auth modal', () => {

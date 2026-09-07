@@ -24,25 +24,40 @@ describe('Modal', () => {
     expect(screen.getByText('modal content')).toBeInTheDocument();
   });
 
-  test('does not mount its content when closed (lazy by default)', () => {
+  // Always mounted (just hidden via CSS), regardless of isOpen — this is
+  // what actually lets the open/close transition play: the browser needs an
+  // already-painted "closed" state to animate away from. A modal that only
+  // enters the DOM at the moment it opens would show up already in its
+  // final ("opened") state on that very first open, with nothing to
+  // transition from.
+  test('renders its content even when closed', () => {
     render(
       <Modal isOpen={false}>
-        <div>modal content</div>
-      </Modal>,
-    );
-    expect(screen.queryByText('modal content')).not.toBeInTheDocument();
-  });
-
-  test('mounts (hidden) content when closed and lazy=false', () => {
-    render(
-      <Modal isOpen={false} lazy={false}>
         <div>modal content</div>
       </Modal>,
     );
     expect(screen.getByText('modal content')).toBeInTheDocument();
   });
 
-  test('stays mounted after being closed once opened, instead of unmounting immediately', () => {
+  test('does not have the "opened" class when closed', () => {
+    render(
+      <Modal isOpen={false}>
+        <div>modal content</div>
+      </Modal>,
+    );
+    expect(document.querySelector('.Modal')).not.toHaveClass('opened');
+  });
+
+  test('has the "opened" class when open', () => {
+    render(
+      <Modal isOpen>
+        <div>modal content</div>
+      </Modal>,
+    );
+    expect(document.querySelector('.Modal')).toHaveClass('opened');
+  });
+
+  test('stays mounted after being closed, instead of unmounting', () => {
     const { rerender } = render(
       <Modal isOpen>
         <div>modal content</div>

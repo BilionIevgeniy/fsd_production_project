@@ -48,9 +48,7 @@ export const Modal = ({ className = '', children, isOpen = false, onClose }: Mod
     };
   }, [isOpen, onKeyDown]);
 
-  // Safety net for the case where the whole Modal unmounts mid-animation
-  // (e.g. the parent stops rendering it): don't fire a timeout callback
-  // against an unmounted component.
+  // clears the close-animation timer if the modal unmounts mid-animation
   useEffect(() => () => clearTimeout(closeTimerRef.current), []);
 
   const mods: Record<string, boolean> = {

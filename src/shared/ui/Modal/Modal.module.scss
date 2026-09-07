@@ -24,9 +24,7 @@ $animation-duration: 0.3s;
     }
   }
 
-  // Declared after &.opened so, while both classes are present during the
-  // closing animation (isOpen only flips to false once it ends), this wins
-  // the cascade and plays the content back out to its initial scale/opacity.
+  // must come after &.opened to win the cascade during the closing animation
   &.isClosing {
     .content {
       opacity: 0;

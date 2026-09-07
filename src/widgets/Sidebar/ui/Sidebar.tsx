@@ -18,8 +18,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
   const [collapsed, setCollapsed] = useState(false);
   const { t } = useTranslation();
 
-  // Passed to the custom Button component below, so react/jsx-no-bind
-  // requires a stable reference here rather than an inline arrow.
   const toggleCollapsed = useCallback(() => setCollapsed((prev) => !prev), []);
 
   return (

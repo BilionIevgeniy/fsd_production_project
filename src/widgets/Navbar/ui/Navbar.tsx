@@ -13,8 +13,6 @@ export function Navbar({ className = '' }: NavbarProps) {
   const { t } = useTranslation();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
-  // Both handed to custom components (Button, Modal) below, so react/jsx-no-bind
-  // requires stable references here rather than inline arrows.
   const openAuthModal = useCallback(() => setIsAuthModalOpen(true), []);
   const closeAuthModal = useCallback(() => setIsAuthModalOpen(false), []);
 

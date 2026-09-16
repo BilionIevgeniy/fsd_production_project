@@ -156,6 +156,7 @@ module.exports = {
       'error',
       { markupOnly: true, ignoreAttribute: ['to', 'target', 'path', 'data-testid', 'ref'] },
     ],
+    'no-param-reassign': 'off',
   },
   // globals - global variables
   globals: {

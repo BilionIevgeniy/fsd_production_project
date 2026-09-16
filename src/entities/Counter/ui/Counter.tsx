@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { Button } from 'shared/ui/Button/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -9,13 +10,13 @@ export const Counter = () => {
     const counterValue = useSelector(getCounterValue);
     const { t } = useTranslation();
 
-    const increment = () => {
+    const increment = useCallback(() => {
         dispatch(counterActions.increment());
-    };
+    }, [dispatch]);
 
-    const decrement = () => {
+    const decrement = useCallback(() => {
         dispatch(counterActions.decrement());
-    };
+    }, [dispatch]);
 
     return (
         <div>

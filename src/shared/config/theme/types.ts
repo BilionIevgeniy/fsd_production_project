@@ -1,6 +1,6 @@
 export enum Theme {
-  NORMAL = 'normal',
-  DARK = 'dark',
+  NORMAL = 'app_normal_theme',
+  DARK = 'app_dark_theme',
 }
 
 export const LOCAL_STORAGE_THEME_KEY = 'theme';

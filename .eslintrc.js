@@ -166,7 +166,7 @@ module.exports = {
   overrides: [
     {
       // Disable rules requiring type information for configuration files
-      files: ['./.eslintrc.js', './webpack.config.ts', './config/**/*.{ts,js}'],
+      files: ['./.eslintrc.js', './webpack.config.ts', './config/**/*.{ts,js}', './json-server/**/*.{ts,js}'],
       parserOptions: {
         project: null,
       },

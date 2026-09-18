@@ -23,7 +23,7 @@ describe('Navbar', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Login' }));
 
-    expect(screen.getByText('Login form')).toBeInTheDocument();
+    expect(screen.getByTestId('LoginForm')).toBeInTheDocument();
   });
 
   test('closing the auth modal (overlay click) removes it from view', () => {
@@ -31,7 +31,7 @@ describe('Navbar', () => {
     renderWithTranslation(<Navbar />);
 
     fireEvent.click(screen.getByRole('button', { name: 'Login' }));
-    expect(screen.getByText('Login form')).toBeInTheDocument();
+    expect(screen.getByTestId('LoginForm')).toBeInTheDocument();
 
     fireEvent.click(document.querySelector('.overlay') as HTMLElement);
     act(() => {

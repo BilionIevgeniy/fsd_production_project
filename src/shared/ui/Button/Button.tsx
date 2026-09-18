@@ -1,4 +1,4 @@
-import { classNames } from 'shared/lib/classNames/classNames';
+import { classNames } from 'shared/lib/classNames';
 import cls from './Button.module.scss';
 
 export enum ButtonTheme {

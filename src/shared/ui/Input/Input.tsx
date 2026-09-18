@@ -1,5 +1,5 @@
 import { classNames } from 'shared/lib/classNames';
-import React, { ChangeEvent, InputHTMLAttributes, memo, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, InputHTMLAttributes, memo, useEffect, useRef, useState } from 'react';
 import cls from './Input.module.scss';
 
 type HTMLInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange'>;
@@ -14,19 +14,39 @@ interface InputProps extends HTMLInputProps {
 export const Input = memo((props: InputProps) => {
   const { className = '', value, onChange, type = 'text', placeholder, autofocus, ...otherProps } = props;
   const ref = useRef<HTMLInputElement>(null);
+  const measureCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const [isFocused, setIsFocused] = useState(false);
   const [caretPosition, setCaretPosition] = useState(0);
 
+  const getTextWidth = (text: string) => {
+    if (!ref.current) return 0;
+    if (!measureCanvasRef.current) {
+      measureCanvasRef.current = document.createElement('canvas');
+    }
+    const context = measureCanvasRef.current.getContext('2d');
+    if (!context) return 0;
+    context.font = getComputedStyle(ref.current).font;
+    return context.measureText(text).width;
+  };
+
   useEffect(() => {
+    console.log('autofocus', autofocus);
+
     if (autofocus) {
       setIsFocused(true);
       ref.current?.focus();
     }
   }, [autofocus]);
 
+  useEffect(() => {
+    setCaretPosition(getTextWidth(value ?? ''));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     onChange?.(e.target.value);
-    setCaretPosition(e.target.value.length);
+    const width = getTextWidth(e.target.value.slice(0, e.target.selectionStart ?? e.target.value.length));
+    setCaretPosition(width);
   };
 
   const onBlur = () => {
@@ -38,7 +58,8 @@ export const Input = memo((props: InputProps) => {
   };
 
   const onSelect = (e: ChangeEvent<HTMLInputElement>) => {
-    setCaretPosition(e?.target?.selectionStart || 0);
+    const width = getTextWidth(e.target.value.slice(0, e.target.selectionStart ?? 0));
+    setCaretPosition(width);
   };
 
   return (
@@ -56,7 +77,7 @@ export const Input = memo((props: InputProps) => {
           onSelect={onSelect}
           {...otherProps}
         />
-        {isFocused && <span className={cls.caret} style={{ left: `${caretPosition * 9}px` }} />}
+        {isFocused && <span className={cls.caret} style={{ left: `${caretPosition}px` }} />}
       </div>
     </div>
   );

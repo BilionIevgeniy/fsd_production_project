@@ -7,14 +7,16 @@ interface ModalProps {
   className?: string;
   children?: ReactNode;
   isOpen?: boolean;
+  lazy?: boolean;
   onClose?: () => void;
 }
 
 // Kept in sync with the transition duration in Modal.module.scss.
 const ANIMATION_DELAY = 300;
 
-export const Modal = ({ className = '', children, isOpen = false, onClose }: ModalProps) => {
+export const Modal = ({ lazy, className = '', children, isOpen = false, onClose }: ModalProps) => {
   const [isClosing, setIsClosing] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout>>();
 
   const closeHandler = useCallback(() => {
@@ -38,6 +40,12 @@ export const Modal = ({ className = '', children, isOpen = false, onClose }: Mod
 
   useEffect(() => {
     if (isOpen) {
+      setIsMounted(true);
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (isOpen) {
       document.body.style.overflow = 'hidden';
       window.addEventListener('keydown', onKeyDown);
     }
@@ -55,6 +63,10 @@ export const Modal = ({ className = '', children, isOpen = false, onClose }: Mod
     [cls.opened]: isOpen,
     [cls.isClosing]: isClosing,
   };
+
+  if (lazy && !isMounted) {
+    return null;
+  }
 
   return (
     <Portal>

@@ -29,6 +29,11 @@
   color: var(--primary-color);
 }
 
+.outlineInverted {
+  border: 1px solid var(--inverted-primary-color);
+  color: var(--inverted-primary-color);
+}
+
 .background {
   border: none;
   color: var(--primary-color);

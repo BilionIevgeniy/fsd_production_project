@@ -3,15 +3,18 @@ import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from 'app/providers/ThemeProvider';
 import { ErrorBoundary } from 'app/providers/ErrorBoundary';
 import 'shared/config/language/i18n';
+import { StoreProvider } from 'app/providers/StoreProvider';
 import App from './app/App';
 
 render(
-  <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-    <ErrorBoundary>
-      <ThemeProvider>
-        <App />
-      </ThemeProvider>
-    </ErrorBoundary>
-  </BrowserRouter>,
+  <StoreProvider>
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      <ErrorBoundary>
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
+      </ErrorBoundary>
+    </BrowserRouter>
+  </StoreProvider>,
   document.getElementById('root'),
 );

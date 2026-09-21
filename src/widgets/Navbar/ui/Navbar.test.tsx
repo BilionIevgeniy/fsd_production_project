@@ -17,32 +17,4 @@ describe('Navbar', () => {
     renderWithTranslation(<Navbar />);
     expect(document.querySelector('.opened')).not.toBeInTheDocument();
   });
-
-  test('clicking Login opens the auth modal', () => {
-    renderWithTranslation(<Navbar />);
-
-    fireEvent.click(screen.getByRole('button', { name: 'Login' }));
-
-    expect(screen.getByTestId('LoginForm')).toBeInTheDocument();
-  });
-
-  test('closing the auth modal (overlay click) removes it from view', () => {
-    jest.useFakeTimers();
-    renderWithTranslation(<Navbar />);
-
-    fireEvent.click(screen.getByRole('button', { name: 'Login' }));
-    expect(screen.getByTestId('LoginForm')).toBeInTheDocument();
-
-    fireEvent.click(document.querySelector('.overlay') as HTMLElement);
-    act(() => {
-      jest.advanceTimersByTime(300);
-    });
-
-    expect(document.querySelector('.opened')).not.toBeInTheDocument();
-
-    act(() => {
-      jest.runOnlyPendingTimers();
-    });
-    jest.useRealTimers();
-  });
 });

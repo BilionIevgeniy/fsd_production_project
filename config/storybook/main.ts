@@ -1,4 +1,5 @@
 import path from 'path';
+import webpack from 'webpack';
 import type { StorybookConfig } from '@storybook/core-common';
 import type { RuleSetRule } from 'webpack';
 import { buildCssLoader } from '../loaders/cssLoader';
@@ -12,7 +13,7 @@ const storybookConfig: StorybookConfig = {
     builder: 'webpack5',
   },
   // Storybook builds with its own webpack config, unaware of config/build/*.
-  // Mirror the two settings stories actually need from there.
+  // Mirror the settings stories actually need from there.
   webpackFinal: async (config) => {
     // Same absolute-import resolution as config/build/buildResolvers.ts,
     // tsconfig.json's baseUrl, and Jest's modulePaths.
@@ -44,6 +45,15 @@ const storybookConfig: StorybookConfig = {
       ...config.module,
       rules: [...rules, buildCssLoader(true), buildSvgLoader()],
     };
+
+    // Same global as config/build/buildPlugins.ts — stories pulling in
+    // createReduxStore() (via StoreDecorator) reference __IS_DEV__ directly.
+    config.plugins = [
+      ...(config.plugins ?? []),
+      new webpack.DefinePlugin({
+        __IS_DEV__: JSON.stringify(config.mode !== 'production'),
+      }),
+    ];
 
     return config;
   },

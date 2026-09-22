@@ -5,9 +5,13 @@ name: Update Loki baseline
 # .loki/reference on the branch you run this from. Run it after an
 # intentional visual change, then let the regular CI compare against the
 # fresh baseline.
+# workflow_dispatch = only runs when someone clicks "Run workflow" in the
+# Actions tab and picks a branch there — never fires on its own.
 on:
   workflow_dispatch:
 
+# GITHUB_TOKEN is read-only by default; this job commits and pushes, so it
+# needs write access explicitly.
 permissions:
   contents: write
 
@@ -15,6 +19,8 @@ jobs:
   update-baseline:
     runs-on: ubuntu-latest
     steps:
+      # For workflow_dispatch, github.ref is exactly the branch picked in the
+      # "Run workflow" dropdown — safe to check out and push back to directly.
       - uses: actions/checkout@v7
         with:
           ref: ${{ github.ref }}
@@ -53,5 +59,17 @@ jobs:
             echo "No screenshot changes to commit"
             exit 0
           fi
+          # [skip ci]: this pushes straight to main, which would otherwise
+          # re-trigger ci.yml's push event to compare the baseline against
+          # itself — pointless, so GitHub is told to skip that run.
           git commit -m "chore: update loki visual baseline [skip ci]"
-          git push origin HEAD:${{ github.ref }}
+
+          # retry: GitHub's own network occasionally blips for a few seconds
+          # on hosted runners — not our bug, just don't make a human re-run
+          # the whole job for it.
+          for i in 1 2 3; do
+            git push origin HEAD:${{ github.ref }} && exit 0
+            echo "push failed (attempt $i/3), retrying in 10s..."
+            sleep 10
+          done
+          exit 1

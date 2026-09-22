@@ -1,0 +1,106 @@
+name: Approve visual changes
+
+# Triggered by adding the "approve-ui" label to a PR, after a human
+# reviewed the diffs in test:ui:report (or the failed CI run's loki-diff
+# artifact) and decided the change is intentional. Re-shoots every story
+# (same chrome.docker engine as ci.yml and update-loki-baseline.yml) and
+# pushes the fresh .loki/reference straight to the PR's own branch.
+#
+# Only same-repo PRs are supported — a PR from a fork gets a read-only
+# GITHUB_TOKEN, so the final push step would fail.
+# types: [labeled] — fires whenever ANY label gets added to ANY PR targeting
+# main (the default target scope for this repo's PRs); the `if:` below is
+# what actually filters it down to just this one label.
+on:
+  pull_request:
+    types: [labeled]
+
+# GITHUB_TOKEN is read-only by default; this job commits+pushes (contents)
+# and calls `gh pr edit --remove-label` (pull-requests), so both need write
+# access explicitly — listing any permission here switches everything else
+# unlisted to "none", so both must be spelled out.
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  approve-ui:
+    # job-level if: without this, the job would run (and waste CI minutes)
+    # on every label, not just "approve-ui". A false `if:` shows as
+    # "skipped" in the UI, not failed.
+    if: github.event.label.name == 'approve-ui'
+    runs-on: ubuntu-latest
+    steps:
+      # Different from update-loki-baseline.yml's `ref: ${{ github.ref }}`:
+      # for a pull_request event, github.ref points at a throwaway GitHub-made
+      # merge commit (refs/pull/N/merge), not a real branch you can push to.
+      # head.ref is the actual name of the PR's source branch.
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+
+      - run: npm ci --legacy-peer-deps
+
+      - name: Start Storybook
+        run: npx start-storybook -p 6006 -c config/storybook --ci &
+
+      - name: Wait for Storybook to be ready
+        run: |
+          for i in $(seq 1 60); do
+            if curl -sf http://localhost:6006 > /dev/null; then
+              echo "Storybook is up"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "Storybook did not start in time" >&2
+          exit 1
+
+      - name: Regenerate reference screenshots
+        run: npx loki update
+
+      - name: Commit new baseline
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .loki/reference .loki/.gitignore
+          if git diff --cached --quiet; then
+            echo "No screenshot changes to commit"
+            exit 0
+          fi
+          # No [skip ci] here (unlike update-loki-baseline.yml): this push
+          # goes to the PR branch, so we WANT it to re-trigger ci.yml's
+          # pull_request event and show the PR green with the new baseline.
+          git commit -m "chore: approve visual changes for #${{ github.event.pull_request.number }}"
+
+          # retry: GitHub's own network occasionally blips for a few seconds
+          # on hosted runners — not our bug, just don't make a human re-run
+          # the whole job for it.
+          for i in 1 2 3; do
+            git push origin HEAD:${{ github.event.pull_request.head.ref }} && exit 0
+            echo "push failed (attempt $i/3), retrying in 10s..."
+            sleep 10
+          done
+          exit 1
+
+      # if: always() — runs even if an earlier step failed, so the label is
+      # always cleared and can be re-added to retry.
+      - name: Remove the label
+        if: always()
+        run: |
+          for i in 1 2 3; do
+            gh pr edit ${{ github.event.pull_request.number }} --remove-label approve-ui && exit 0
+            echo "gh pr edit failed (attempt $i/3), retrying in 10s..."
+            sleep 10
+          done
+          exit 1
+        env:
+          # gh (GitHub CLI) is preinstalled on the runner; it just needs a
+          # token in this env var to authenticate — GITHUB_TOKEN is minted
+          # automatically per run, nothing to set up.
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

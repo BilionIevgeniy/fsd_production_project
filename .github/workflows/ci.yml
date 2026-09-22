@@ -1,5 +1,7 @@
 name: CI
 
+# push: direct pushes to main. pull_request: any PR whose target (base) branch is
+# main — runs on open/new commits/reopen by default, regardless of source branch.
 on:
   push:
     branches: [main]
@@ -7,6 +9,12 @@ on:
     branches: [main]
 
 # Cancel superseded runs on the same branch/PR so pushes don't queue up.
+# `group` is just a string key GitHub uses to decide which runs "belong together" —
+# only runs sharing the exact same group string can cancel each other.
+# github.workflow = this workflow's name ("CI"), github.ref = the branch/PR ref
+# being built (e.g. refs/heads/main or refs/pull/12/merge) — so the group ends up
+# unique per branch/PR (e.g. "ci-CI-refs/heads/main"), and a new push on that same
+# branch/PR cancels whatever older run was still in that same group.
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -87,6 +95,8 @@ jobs:
       # image loki pulls — no emulation involved, unlike Apple Silicon).
       - run: npm run test:ui
 
+      # if: failure() — only runs when an earlier step in *this* job failed
+      # (e.g. npm run test:ui) — skipped entirely when everything passed.
       - name: Upload loki diff on failure
         if: failure()
         uses: actions/upload-artifact@v7

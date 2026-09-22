@@ -15,10 +15,13 @@ on:
   pull_request:
     types: [labeled]
 
-# GITHUB_TOKEN is read-only by default; this job commits+pushes and calls
-# `gh pr edit`, so it needs write access explicitly.
+# GITHUB_TOKEN is read-only by default; this job commits+pushes (contents)
+# and calls `gh pr edit --remove-label` (pull-requests), so both need write
+# access explicitly — listing any permission here switches everything else
+# unlisted to "none", so both must be spelled out.
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   approve-ui:
@@ -74,13 +77,28 @@ jobs:
           # goes to the PR branch, so we WANT it to re-trigger ci.yml's
           # pull_request event and show the PR green with the new baseline.
           git commit -m "chore: approve visual changes for #${{ github.event.pull_request.number }}"
-          git push origin HEAD:${{ github.event.pull_request.head.ref }}
+
+          # retry: GitHub's own network occasionally blips for a few seconds
+          # on hosted runners — not our bug, just don't make a human re-run
+          # the whole job for it.
+          for i in 1 2 3; do
+            git push origin HEAD:${{ github.event.pull_request.head.ref }} && exit 0
+            echo "push failed (attempt $i/3), retrying in 10s..."
+            sleep 10
+          done
+          exit 1
 
       # if: always() — runs even if an earlier step failed, so the label is
       # always cleared and can be re-added to retry.
       - name: Remove the label
         if: always()
-        run: gh pr edit ${{ github.event.pull_request.number }} --remove-label approve-ui
+        run: |
+          for i in 1 2 3; do
+            gh pr edit ${{ github.event.pull_request.number }} --remove-label approve-ui && exit 0
+            echo "gh pr edit failed (attempt $i/3), retrying in 10s..."
+            sleep 10
+          done
+          exit 1
         env:
           # gh (GitHub CLI) is preinstalled on the runner; it just needs a
           # token in this env var to authenticate — GITHUB_TOKEN is minted

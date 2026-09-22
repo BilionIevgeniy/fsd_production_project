@@ -63,4 +63,13 @@ jobs:
           # re-trigger ci.yml's push event to compare the baseline against
           # itself — pointless, so GitHub is told to skip that run.
           git commit -m "chore: update loki visual baseline [skip ci]"
-          git push origin HEAD:${{ github.ref }}
+
+          # retry: GitHub's own network occasionally blips for a few seconds
+          # on hosted runners — not our bug, just don't make a human re-run
+          # the whole job for it.
+          for i in 1 2 3; do
+            git push origin HEAD:${{ github.ref }} && exit 0
+            echo "push failed (attempt $i/3), retrying in 10s..."
+            sleep 10
+          done
+          exit 1

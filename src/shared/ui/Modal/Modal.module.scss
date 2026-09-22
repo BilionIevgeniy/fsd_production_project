@@ -52,3 +52,11 @@ $animation-duration: 0.3s;
   transition: transform $animation-duration ease, opacity $animation-duration ease;
   transform: scale(0.8);
 }
+
+// also makes Modal/loki screenshots deterministic — see package.json's loki.features
+@media (prefers-reduced-motion: reduce) {
+  .Modal,
+  .content {
+    transition: none !important;
+  }
+}

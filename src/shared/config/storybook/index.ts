@@ -5,3 +5,4 @@ export { TranslationDecorator } from './TranslationDecorator/TranslationDecorato
 export { RouterDecorator } from './RouterDecorator/RouterDecorator';
 export { ContentPageDecorator } from './ContentPageDecorator/ContentPageDecorator';
 export { PageLayoutDecorator } from './PageLayoutDecorator/PageLayoutDecorator';
+export { StoreDecorator } from './StoreDecorator/StoreDecorator';

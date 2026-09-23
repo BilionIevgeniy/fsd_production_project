@@ -12,7 +12,15 @@ interface InputProps extends HTMLInputProps {
 }
 
 export const Input = memo((props: InputProps) => {
-  const { className = '', value, onChange, type = 'text', placeholder, autofocus, ...otherProps } = props;
+  const {
+    className = '',
+    value,
+    onChange,
+    type = 'text',
+    placeholder,
+    autofocus,
+    ...otherProps
+  } = props;
   const ref = useRef<HTMLInputElement>(null);
   const measureCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const [isFocused, setIsFocused] = useState(false);
@@ -43,7 +51,9 @@ export const Input = memo((props: InputProps) => {
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     onChange?.(e.target.value);
-    const width = getTextWidth(e.target.value.slice(0, e.target.selectionStart ?? e.target.value.length));
+    const width = getTextWidth(
+      e.target.value.slice(0, e.target.selectionStart ?? e.target.value.length),
+    );
     setCaretPosition(width);
   };
 

@@ -9,7 +9,8 @@ interface ThemeProviderProps {
 
 export const ThemeProvider: FC<ThemeProviderProps> = ({ children, initialTheme }) => {
   const [theme, setTheme] = useState<Theme>(
-    () => initialTheme ?? ((localStorage.getItem(LOCAL_STORAGE_THEME_KEY) as Theme) || Theme.NORMAL),
+    () =>
+      initialTheme ?? ((localStorage.getItem(LOCAL_STORAGE_THEME_KEY) as Theme) || Theme.NORMAL),
   );
 
   // drives [data-theme='...'] in src/app/styles/themes/*.scss, on <html> so it covers body and anything portaled into it

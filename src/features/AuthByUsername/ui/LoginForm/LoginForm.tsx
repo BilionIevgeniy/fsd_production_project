@@ -56,7 +56,12 @@ export const LoginForm = memo(({ className = '' }: LoginFormProps) => {
         onChange={onChangePassword}
         value={password}
       />
-      <Button theme={ButtonTheme.OUTLINE} className={cls.loginBtn} onClick={onLoginClick} disabled={isLoading}>
+      <Button
+        theme={ButtonTheme.OUTLINE}
+        className={cls.loginBtn}
+        onClick={onLoginClick}
+        disabled={isLoading}
+      >
         {t('Enter')}
       </Button>
     </div>

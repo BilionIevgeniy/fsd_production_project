@@ -7,7 +7,11 @@ import { buildSvgLoader } from '../loaders/svgLoader';
 
 const storybookConfig: StorybookConfig = {
   stories: ['../../src/**/*.stories.mdx', '../../src/**/*.stories.@(js|jsx|ts|tsx)'],
-  addons: ['@storybook/addon-links', '@storybook/addon-essentials', '@storybook/addon-interactions'],
+  addons: [
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
+    '@storybook/addon-interactions',
+  ],
   framework: '@storybook/react',
   core: {
     builder: 'webpack5',
@@ -47,7 +51,7 @@ const storybookConfig: StorybookConfig = {
     };
 
     // Same global as config/build/buildPlugins.ts — stories pulling in
-    // createReduxStore() (via StoreDecorator) reference __IS_DEV__ directly.
+    // createReduxStore (via StoreDecorator) reference __IS_DEV__ directly.
     config.plugins = [
       ...(config.plugins ?? []),
       new webpack.DefinePlugin({

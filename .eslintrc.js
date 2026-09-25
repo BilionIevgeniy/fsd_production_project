@@ -90,9 +90,9 @@ module.exports = {
       // Maximum line length
       'warn',
       {
-        code: 120, // Maximum code length
+        code: 100, // Maximum code length
         tabWidth: 4, // Tab width for length calculation. Must match .prettierrc.json
-        comments: 120, // Maximum comment length
+        comments: 100, // Maximum comment length
         ignoreComments: true,
         ignoreTrailingComments: true,
         ignoreUrls: true,

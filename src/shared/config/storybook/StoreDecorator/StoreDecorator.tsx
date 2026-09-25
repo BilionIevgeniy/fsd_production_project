@@ -1,11 +1,13 @@
 import { Story } from '@storybook/react';
-import { DeepPartial } from '@reduxjs/toolkit';
 import { StoreProvider } from 'app/providers/StoreProvider';
-import { StateSchema } from 'app/providers/StoreProvider/config/StateSchema';
+import { DeepPartial, StateSchema } from 'app/providers/StoreProvider/config/StateSchema';
+import { ReducersList } from 'shared/lib/components/DynamicModuleLoader';
 
 // use for components that read the Redux store directly (useSelector/useDispatch)
-export const StoreDecorator = (state: DeepPartial<StateSchema>) => (StoryComponent: Story) => (
-  <StoreProvider initialState={state}>
-    <StoryComponent />
-  </StoreProvider>
-);
+export const StoreDecorator =
+  (state: DeepPartial<StateSchema>, asyncReducers?: ReducersList) => (StoryComponent: Story) =>
+    (
+      <StoreProvider initialState={state} asyncReducers={asyncReducers}>
+        <StoryComponent />
+      </StoreProvider>
+    );

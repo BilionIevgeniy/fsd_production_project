@@ -1,26 +1,25 @@
-import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { StoreDecorator, TranslationDecorator } from 'shared/config/storybook';
-import { LoginForm } from './LoginForm';
+import { ReducersList } from 'shared/lib/components/DynamicModuleLoader';
+import LoginForm from './LoginForm';
+import { loginReducer } from '../../model/slice/loginSlice';
+
+const defaultAsyncReducers: ReducersList = {
+  loginForm: loginReducer,
+};
 
 export default {
-  title: 'features/LoginForm',
+  title: 'features/AuthByUsername/LoginForm',
   component: LoginForm,
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
+  decorators: [TranslationDecorator],
 } as ComponentMeta<typeof LoginForm>;
 
 const Template: ComponentStory<typeof LoginForm> = (args) => <LoginForm {...args} />;
 
 export const Primary = Template.bind({});
-Primary.args = {};
-Primary.decorators = [TranslationDecorator, StoreDecorator({})];
+Primary.decorators = [StoreDecorator({})];
 
 export const WithError = Template.bind({});
-WithError.args = {};
-WithError.decorators = [TranslationDecorator, StoreDecorator({ loginForm: { error: 'error message' } })];
-
-export const Loading = Template.bind({});
-Loading.args = {};
-Loading.decorators = [TranslationDecorator, StoreDecorator({ loginForm: { isLoading: true } })];
+WithError.decorators = [
+  StoreDecorator({ loginForm: { error: 'error text' } }, defaultAsyncReducers),
+];

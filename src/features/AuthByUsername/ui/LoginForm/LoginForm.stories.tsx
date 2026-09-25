@@ -1,7 +1,12 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { StoreDecorator, TranslationDecorator } from 'shared/config/storybook';
+import { ReducersList } from 'shared/lib/components/DynamicModuleLoader';
 import LoginForm from './LoginForm';
 import { loginReducer } from '../../model/slice/loginSlice';
+
+const defaultAsyncReducers: ReducersList = {
+  loginForm: loginReducer,
+};
 
 export default {
   title: 'features/AuthByUsername/LoginForm',
@@ -16,5 +21,5 @@ Primary.decorators = [StoreDecorator({})];
 
 export const WithError = Template.bind({});
 WithError.decorators = [
-  StoreDecorator({ loginForm: { error: 'error text' } }, { loginForm: loginReducer }),
+  StoreDecorator({ loginForm: { error: 'error text' } }, defaultAsyncReducers),
 ];

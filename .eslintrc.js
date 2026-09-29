@@ -120,7 +120,10 @@ module.exports = {
     // Allow using both function declaration and arrow functions for components
     'react/function-component-definition': [
       'error',
-      { namedComponents: ['function-declaration', 'arrow-function'], unnamedComponents: 'arrow-function' },
+      {
+        namedComponents: ['function-declaration', 'arrow-function'],
+        unnamedComponents: 'arrow-function',
+      },
     ],
 
     // === React Hooks rules ===
@@ -166,7 +169,12 @@ module.exports = {
   overrides: [
     {
       // Disable rules requiring type information for configuration files
-      files: ['./.eslintrc.js', './webpack.config.ts', './config/**/*.{ts,js}', './json-server/**/*.{ts,js}'],
+      files: [
+        './.eslintrc.js',
+        './webpack.config.ts',
+        './config/**/*.{ts,js}',
+        './json-server/**/*.{ts,js}',
+      ],
       parserOptions: {
         project: null,
       },

@@ -35,6 +35,7 @@ jobs:
       - run: npm ci --legacy-peer-deps
       - run: npm run lint:ts
       - run: npm run lint:scss
+      - run: npm run format:check
 
   unit-test:
     name: Unit tests (jest)

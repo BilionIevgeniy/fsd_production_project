@@ -1,11 +1,11 @@
 {
-	"folders": [
-		{
-			"path": "."
-		},
-		{
-			"path": "../back"
-		}
-	],
-  "settings": {}
+  "folders": [
+    {
+      "path": ".",
+    },
+    {
+      "path": "../back",
+    },
+  ],
+  "settings": {},
 }

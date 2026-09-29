@@ -13,6 +13,8 @@
     "lint:ts:fix": "eslint \"**/*.{ts,tsx}\" --fix",
     "lint:scss": "npx stylelint \"**/*.scss\"",
     "lint:scss:fix": "npx stylelint \"**/*.scss\" --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "storybook": "start-storybook -p 6006 -c config/storybook",
     "build-storybook": "build-storybook -c config/storybook",
     "test:unit": "jest --config ./config/jest/jest.config.ts",
@@ -73,6 +75,7 @@
     "loki": "^0.35.1",
     "mini-css-extract-plugin": "^2.5.3",
     "postcss": "^8.5.15",
+    "prettier": "^3.3.3",
     "react-refresh": "^0.12.0",
     "reg-cli": "^0.17.6",
     "regenerator-runtime": "^0.13.9",
@@ -114,12 +117,22 @@
         "height": 768,
         "deviceScaleFactor": 1,
         "mobile": false,
-        "features": [{ "name": "prefers-reduced-motion", "value": "reduce" }]
+        "features": [
+          {
+            "name": "prefers-reduced-motion",
+            "value": "reduce"
+          }
+        ]
       },
       "chrome.iphone7": {
         "target": "chrome.docker",
         "preset": "iPhone 7",
-        "features": [{ "name": "prefers-reduced-motion", "value": "reduce" }]
+        "features": [
+          {
+            "name": "prefers-reduced-motion",
+            "value": "reduce"
+          }
+        ]
       }
     }
   }

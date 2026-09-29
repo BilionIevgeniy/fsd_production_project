@@ -13,11 +13,13 @@ export interface StateSchema {
 
 export type StateSchemaKey = keyof StateSchema;
 
+export type ReducersList = {
+  [name in StateSchemaKey]?: Reducer;
+};
+
 // redux's own DeepPartial doesn't distribute over optional (T | undefined)
 // properties, so it leaves async slices like `loginForm` fully required
-export type DeepPartial<T> = T extends object
-  ? { [P in keyof T]?: DeepPartial<T[P]> }
-  : T;
+export type DeepPartial<T> = T extends object ? { [P in keyof T]?: DeepPartial<T[P]> } : T;
 
 export interface ReducerManagerSchema {
   getReducerMap: () => ReducersMapObject<StateSchema>;

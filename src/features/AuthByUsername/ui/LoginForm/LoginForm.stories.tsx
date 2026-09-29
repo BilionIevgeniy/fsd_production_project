@@ -1,6 +1,6 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { StoreDecorator, TranslationDecorator } from 'shared/config/storybook';
-import { ReducersList } from 'shared/lib/components/DynamicModuleLoader';
+import type { ReducersList } from 'app/providers/StoreProvider/config/StateSchema';
 import LoginForm from './LoginForm';
 import { loginReducer } from '../../model/slice/loginSlice';
 

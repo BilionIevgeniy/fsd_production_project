@@ -10,7 +10,9 @@ $animation-duration: 0.3s;
   height: 100%;
   opacity: 0;
   visibility: hidden;
-  transition: opacity $animation-duration ease-in, visibility $animation-duration ease-in;
+  transition:
+    opacity $animation-duration ease-in,
+    visibility $animation-duration ease-in;
   pointer-events: none;
 
   &.opened {
@@ -49,7 +51,9 @@ $animation-duration: 0.3s;
   border-radius: 0.5rem;
   background-color: var(--bg-color);
   opacity: 0;
-  transition: transform $animation-duration ease, opacity $animation-duration ease;
+  transition:
+    transform $animation-duration ease,
+    opacity $animation-duration ease;
   transform: scale(0.8);
 }
 

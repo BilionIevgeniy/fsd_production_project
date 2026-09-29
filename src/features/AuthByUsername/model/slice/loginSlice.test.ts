@@ -28,7 +28,9 @@ describe('loginSlice.test', () => {
       isLoading: false,
       error: 'some error',
     };
-    expect(loginReducer(state, loginByUsername.pending('', { username: '', password: '' }))).toEqual({
+    expect(
+      loginReducer(state, loginByUsername.pending('', { username: '', password: '' })),
+    ).toEqual({
       username: '',
       password: '',
       isLoading: true,
@@ -41,11 +43,10 @@ describe('loginSlice.test', () => {
     expect(
       loginReducer(
         state,
-        loginByUsername.fulfilled(
-          { id: '1', username: 'admin' },
-          '',
-          { username: '', password: '' },
-        ),
+        loginByUsername.fulfilled({ id: '1', username: 'admin' }, '', {
+          username: '',
+          password: '',
+        }),
       ),
     ).toEqual({ username: '', password: '', isLoading: false });
   });
@@ -55,12 +56,7 @@ describe('loginSlice.test', () => {
     expect(
       loginReducer(
         state,
-        loginByUsername.rejected(
-          null,
-          '',
-          { username: '', password: '' },
-          'error text',
-        ),
+        loginByUsername.rejected(null, '', { username: '', password: '' }, 'error text'),
       ),
     ).toEqual({ username: '', password: '', isLoading: false, error: 'error text' });
   });

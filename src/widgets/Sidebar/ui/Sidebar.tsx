@@ -1,5 +1,5 @@
 import { classNames } from 'shared/lib/classNames';
-import { useCallback, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ThemeSwitcher } from 'features/ThemeSwitcher';
 import { LangSwitcher } from 'features/LangSwitcher';
@@ -14,7 +14,7 @@ interface SidebarProps {
   className?: string;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
+export const Sidebar = memo(({ className = '' }: SidebarProps) => {
   const [collapsed, setCollapsed] = useState(false);
   const { t } = useTranslation();
 
@@ -48,4 +48,4 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
       </div>
     </div>
   );
-};
+});

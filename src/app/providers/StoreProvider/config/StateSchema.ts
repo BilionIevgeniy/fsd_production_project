@@ -8,10 +8,12 @@ import {
   ReducersMapObject,
   ThunkMiddleware,
 } from '@reduxjs/toolkit';
+import { ProfileSchema } from 'entities/Profile';
 
 export interface StateSchema {
   counter: CounterSchema;
   user: UserSchema;
+  profile: ProfileSchema;
 
   // Async Reduers
   loginForm?: LoginSchema;
@@ -34,7 +36,10 @@ export interface ReducerManagerSchema {
   remove: (key: StateSchemaKey) => void;
 }
 
-export interface ReduxStoreWithManager
-  extends EnhancedStore<StateSchema, AnyAction, [ThunkMiddleware<StateSchema>]> {
+export interface ReduxStoreWithManager extends EnhancedStore<
+  StateSchema,
+  AnyAction,
+  [ThunkMiddleware<StateSchema>]
+> {
   reducerManager: ReducerManagerSchema;
 }

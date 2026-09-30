@@ -7,7 +7,7 @@ import cls from './LoginModal.module.scss';
 interface LoginModalProps {
   className?: string;
   isOpen?: boolean;
-  onClose?: () => void;
+  onClose: () => void;
 }
 
 export function LoginModal({ className = '', isOpen, onClose }: LoginModalProps) {
@@ -20,7 +20,7 @@ export function LoginModal({ className = '', isOpen, onClose }: LoginModalProps)
     >
       {isOpen && (
         <Suspense fallback={<Loader />}>
-          <LoginFormAsync />
+          <LoginFormAsync onClose={onClose} />
         </Suspense>
       )}
     </Modal>

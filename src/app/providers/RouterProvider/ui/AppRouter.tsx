@@ -4,7 +4,7 @@ import { routeConfig } from '../config/routeConfig';
 function AppRouter() {
   return (
     <Routes>
-      {routeConfig.map((route) => (
+      {Object.values(routeConfig).map((route) => (
         <Route key={route.path} path={route.path} element={route.element} />
       ))}
     </Routes>

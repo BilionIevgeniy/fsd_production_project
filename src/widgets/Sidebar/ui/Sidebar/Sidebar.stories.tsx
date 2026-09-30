@@ -1,18 +1,23 @@
+import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { TranslationDecorator, ContentPageDecorator } from 'shared/config/storybook';
+
+import { ThemeDecorator } from 'shared/config/storybook/ThemeDecorator/ThemeDecorator';
 import { Theme } from 'shared/config/theme';
 import { Sidebar } from './Sidebar';
 
 export default {
-  title: 'widgets/Sidebar',
+  title: 'widget/Sidebar',
   component: Sidebar,
-  decorators: [TranslationDecorator],
+  argTypes: {
+    backgroundColor: { control: 'color' },
+  },
 } as ComponentMeta<typeof Sidebar>;
 
 const Template: ComponentStory<typeof Sidebar> = (args) => <Sidebar {...args} />;
 
-export const Normal = Template.bind({});
-Normal.decorators = [ContentPageDecorator(Theme.NORMAL)];
+export const Light = Template.bind({});
+Light.args = {};
 
 export const Dark = Template.bind({});
-Dark.decorators = [ContentPageDecorator(Theme.DARK)];
+Dark.args = {};
+Dark.decorators = [ThemeDecorator(Theme.DARK)];

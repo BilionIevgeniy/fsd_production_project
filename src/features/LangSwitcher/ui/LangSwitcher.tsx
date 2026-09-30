@@ -1,4 +1,5 @@
 /* eslint-disable i18next/no-literal-string */
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { classNames } from 'shared/lib/classNames';
 import cls from './LangSwitcher.module.scss';
@@ -7,7 +8,7 @@ interface LangSwitcherProps {
   className?: string;
 }
 
-export const LangSwitcher: React.FC<LangSwitcherProps> = ({ className = '' }) => {
+export const LangSwitcher = memo(({ className = '' }: LangSwitcherProps) => {
   const { i18n } = useTranslation();
   return (
     <div className={classNames(cls.LangSwitcher, {}, [className])}>
@@ -18,4 +19,4 @@ export const LangSwitcher: React.FC<LangSwitcherProps> = ({ className = '' }) =>
       </select>
     </div>
   );
-};
+});

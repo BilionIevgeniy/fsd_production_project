@@ -2,7 +2,7 @@ import { classNames } from 'shared/lib/classNames';
 import { useTranslation } from 'react-i18next';
 import { Button, ButtonTheme } from 'shared/ui/Button/Button';
 import { Input } from 'shared/ui/Input/Input';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { memo, useCallback } from 'react';
 import { Text, TextTheme } from 'shared/ui/Text/Text';
 import { DynamicModuleLoader } from 'shared/lib/components/DynamicModuleLoader';
@@ -13,6 +13,7 @@ import {
   getLoginUsername,
 } from 'features/AuthByUsername/model/selectors';
 import type { ReducersList } from 'app/providers/StoreProvider/config/StateSchema';
+import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import cls from './LoginForm.module.scss';
 import { loginActions, loginReducer } from '../../model/slice/loginSlice';
 import { loginByUsername } from '../../model/services/loginByUsername/loginByUsername';
@@ -23,11 +24,12 @@ const initialReducers: ReducersList = {
 
 export interface LoginFormProps {
   className?: string;
+  onClose: () => void;
 }
 
-const LoginForm = memo(({ className = '' }: LoginFormProps) => {
+const LoginForm = memo(({ className = '', onClose }: LoginFormProps) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const username = useSelector(getLoginUsername);
   const password = useSelector(getLoginPassword);
   const isLoading = useSelector(getLoginIsLoading);
@@ -47,9 +49,12 @@ const LoginForm = memo(({ className = '' }: LoginFormProps) => {
     [dispatch],
   );
 
-  const onLoginClick = useCallback(() => {
-    dispatch(loginByUsername({ username, password }));
-  }, [dispatch, password, username]);
+  const onLoginClick = useCallback(async () => {
+    const result = await dispatch(loginByUsername({ username, password }));
+    if (result.meta.requestStatus === 'fulfilled') {
+      onClose();
+    }
+  }, [onClose, dispatch, password, username]);
 
   return (
     <DynamicModuleLoader reducers={initialReducers} removeAfterUnmount>

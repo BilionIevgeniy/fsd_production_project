@@ -56,6 +56,7 @@ const storybookConfig: StorybookConfig = {
       ...(config.plugins ?? []),
       new webpack.DefinePlugin({
         __IS_DEV__: JSON.stringify(config.mode !== 'production'),
+        __API__: JSON.stringify('http://localhost:8000'),
       }),
     ];
 

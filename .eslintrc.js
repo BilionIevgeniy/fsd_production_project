@@ -56,6 +56,7 @@ module.exports = {
   // rules - configuration for ESLint rules
   rules: {
     '@typescript-eslint/naming-convention': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
     // === Formatting-related rules delegated to Prettier ===
     // Delegate all formatting rules to Prettier.
     // Prettier will automatically use configuration from .prettierrc.json
@@ -164,6 +165,7 @@ module.exports = {
   // globals - global variables
   globals: {
     __IS_DEV__: true,
+    __API__: true,
   },
   // overrides - additional configuration for specific files
   overrides: [

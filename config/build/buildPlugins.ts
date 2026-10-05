@@ -6,7 +6,7 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { BuildOptions } from './types/config';
 
 export const buildPlugins = (options: BuildOptions): webpack.WebpackPluginInstance[] => {
-  const { paths, isDev, analyze } = options;
+  const { paths, isDev, analyze, baseApi } = options;
 
   const plugins = [
     // HtmlWebpackPlugin - generate HTML file with injected scripts and styles
@@ -23,6 +23,7 @@ export const buildPlugins = (options: BuildOptions): webpack.WebpackPluginInstan
     // Define global variables
     new webpack.DefinePlugin({
       __IS_DEV__: JSON.stringify(isDev),
+      __API__: JSON.stringify(baseApi),
     }),
   ];
 

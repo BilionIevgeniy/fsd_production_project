@@ -7,7 +7,7 @@ import {
   ReducersMapObject,
   ThunkMiddleware,
 } from '@reduxjs/toolkit';
-import { ProfileSchema } from 'entities/Profile';
+import type { ProfileSchema } from 'entities/Profile';
 import { AxiosInstance } from 'axios';
 import { NavigateOptions, To } from 'react-router-dom';
 
@@ -49,7 +49,7 @@ export interface ThunkExtraArgs {
   navigate?: (to: To, options?: NavigateOptions) => void;
 }
 
-export interface ThunkApiConfig<T> {
+export interface ThunkConfig<T> {
   rejectValue: T;
   extra: ThunkExtraArgs;
 }

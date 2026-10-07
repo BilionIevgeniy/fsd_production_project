@@ -6,18 +6,20 @@ import type {
   ReducersList,
   StateSchema,
 } from 'app/providers/StoreProvider/config/StateSchema';
+import { AxiosInstance } from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 interface StoreProviderProps {
   children?: ReactNode;
   initialState?: DeepPartial<StateSchema>;
   asyncReducers?: ReducersList;
+  api?: AxiosInstance;
 }
 
 export const StoreProvider = (props: StoreProviderProps) => {
-  const { children, initialState, asyncReducers } = props;
+  const { children, initialState, asyncReducers, api } = props;
   const navigate = useNavigate();
-  const store = createReduxStore(initialState as StateSchema, asyncReducers, navigate);
+  const store = createReduxStore(initialState as StateSchema, asyncReducers, navigate, api);
 
   return <Provider store={store}>{children}</Provider>;
 };

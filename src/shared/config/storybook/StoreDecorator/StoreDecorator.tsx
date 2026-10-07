@@ -1,3 +1,4 @@
+import { AxiosInstance } from 'axios';
 import { Story } from '@storybook/react';
 import { StoreProvider } from 'app/providers/StoreProvider';
 import type {
@@ -8,8 +9,9 @@ import type {
 
 // use for components that read the Redux store directly (useSelector/useDispatch)
 export const StoreDecorator =
-  (state: DeepPartial<StateSchema>, asyncReducers?: ReducersList) => (StoryComponent: Story) => (
-    <StoreProvider initialState={state} asyncReducers={asyncReducers}>
+  (state: DeepPartial<StateSchema>, asyncReducers?: ReducersList, api?: AxiosInstance) =>
+  (StoryComponent: Story) => (
+    <StoreProvider initialState={state} asyncReducers={asyncReducers} api={api}>
       <StoryComponent />
     </StoreProvider>
   );

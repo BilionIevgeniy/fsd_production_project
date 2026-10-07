@@ -1,7 +1,7 @@
 export function classNames(
   cls: string,
   mods: Record<string, boolean | string> = {},
-  addition: string[] = [],
+  addition: Array<string | undefined> = [],
 ) {
   return [
     cls,

@@ -23,3 +23,21 @@
 3. Add `CHROMATIC_PROJECT_TOKEN` as a GitHub repo secret.
 4. Add a CI job running `npx chromatic --exit-zero-on-changes`.
 5. Once confirmed working, remove the Loki-specific pieces (`.loki/`, `update-loki-baseline.yml`, `test:ui*` scripts, `reg-cli`/`loki` devDependencies).
+
+## Interview prep: question bank + mock Q&A
+
+**When:** after the project is finished (can start earlier on finished modules: `Profile`, `DynamicModuleLoader`, store).
+
+**What:** Claude reads the code and builds a question bank specific to this project, then runs a mock interview.
+
+**Topics:** FSD (layers, public API, import rules); Redux Toolkit (slices, thunks, `reducerManager`, `DynamicModuleLoader`, effect order); routing, lazy/Suspense, code splitting; configs (webpack, Jest, tsconfig, ESLint, Storybook); testing (unit, RTL, screenshot); i18n, themes, `classNames`, `__API__`, axios instance; general React (hooks, rerenders, closures).
+
+**Question types:**
+
+- Basic: what does it do and why is it needed.
+- Tricky "why this and not that": why `dispatch` in the page and not in `ProfileCard`; why `modulePaths` and not `moduleDirectories`; why this type and not another (e.g. `interface` vs `type`, `unknown` vs `any`); why `removeAfterUnmount`; why a render helper and not global setup.
+- Each with a reference answer and likely follow-ups.
+
+**Mode:** user answers in own words, Claude grades; where the user is shaky, Claude explains using examples from this repo, asks a follow-up, and marks the topic for a later round.
+
+**Output:** `docs/interview-questions.md` (questions + reference answers) and a weak-topics list (file or memory), since Claude doesn't remember between sessions.

@@ -12,13 +12,26 @@ interface TextProps {
   title?: string;
   text?: string;
   theme?: TextTheme;
+  align?: TextAlign;
+}
+
+export enum TextAlign {
+  RIGHT = 'right',
+  LEFT = 'left',
+  CENTER = 'center',
 }
 
 export const Text = memo((props: TextProps) => {
-  const { className = '', text, title, theme = TextTheme.PRIMARY } = props;
+  const {
+    className = '',
+    text,
+    title,
+    theme = TextTheme.PRIMARY,
+    align = TextAlign.CENTER,
+  } = props;
 
   return (
-    <div className={classNames(cls.Text, { [cls[theme]]: true }, [className])}>
+    <div className={classNames(cls.Text, { [cls[theme]]: true }, [className, cls[align]])}>
       {title && <p className={cls.title}>{title}</p>}
       {text && <p className={cls.text}>{text}</p>}
     </div>

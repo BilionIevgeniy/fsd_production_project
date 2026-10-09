@@ -72,6 +72,8 @@ export const Input = memo((props: InputProps) => {
     setCaretPosition(width);
   };
 
+  const isCaretVisible = isFocused && !readonly;
+
   const mods = {
     [cls.readonly]: readonly,
   };
@@ -92,9 +94,7 @@ export const Input = memo((props: InputProps) => {
           onSelect={onSelect}
           {...otherProps}
         />
-        {isFocused && !readonly && (
-          <span className={cls.caret} style={{ left: `${caretPosition}px` }} />
-        )}
+        {isCaretVisible && <span className={cls.caret} style={{ left: `${caretPosition}px` }} />}
       </div>
     </div>
   );

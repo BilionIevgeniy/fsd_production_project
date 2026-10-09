@@ -2,7 +2,7 @@ import { classNames } from 'shared/lib/classNames';
 import { DynamicModuleLoader } from 'shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
 import {
   fetchProfileData,
-  getProfileData,
+  getProfileForm,
   getProfileReadonly,
   getProfileError,
   getProfileIsLoading,
@@ -27,7 +27,7 @@ interface ProfilePageProps {
 const ProfilePage = ({ className = '' }: ProfilePageProps) => {
   const dispatch = useAppDispatch();
 
-  const data = useSelector(getProfileData);
+  const formData = useSelector(getProfileForm);
   const isLoading = useSelector(getProfileIsLoading);
   const error = useSelector(getProfileError);
   const readonly = useSelector(getProfileReadonly);
@@ -35,8 +35,13 @@ const ProfilePage = ({ className = '' }: ProfilePageProps) => {
   useEffect(() => {
     dispatch(fetchProfileData());
   }, [dispatch]);
+
   const toggleReadOnly = useCallback(() => {
-    dispatch(profileActions.setReadOnly(!readonly));
+    if (!readonly) {
+      dispatch(profileActions.cancelEdit());
+    } else {
+      dispatch(profileActions.setReadOnly(false));
+    }
   }, [dispatch, readonly]);
 
   const onChangeFirstName = useCallback(
@@ -61,7 +66,7 @@ const ProfilePage = ({ className = '' }: ProfilePageProps) => {
           onChangeFirstName={onChangeFirstName}
           onChangeLastName={onChangeLastName}
           readonly={readonly}
-          data={data}
+          data={formData}
           isLoading={isLoading}
           error={error}
         />

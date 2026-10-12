@@ -4,8 +4,8 @@ import { Text, TextAlign, TextTheme } from 'shared/ui/Text/Text';
 import { Input } from 'shared/ui/Input/Input';
 import { Loader } from 'shared/ui';
 import { Avatar } from 'shared/ui/Avatar';
-import { Select } from 'shared/ui/Select/Select';
-import { Country, Currency } from 'shared/const/common';
+import { CurrencySelect } from 'entities/Currency';
+import { CountrySelect } from 'entities/Country';
 import cls from './ProfileCard.module.scss';
 import { Profile } from '../../model/types/profile';
 
@@ -42,7 +42,7 @@ export const ProfileCard = (props: ProfileCardProps) => {
     onChangeUsername,
     onChangeCurrency,
   } = props;
-  const { first, lastname, age, country, city, avatar, username } = data || {};
+  const { first, lastname, age, country, city, avatar, username, currency } = data || {};
   const mods = {
     [cls.editing]: !readonly,
   };
@@ -111,37 +111,17 @@ export const ProfileCard = (props: ProfileCardProps) => {
         placeholder={t('Your Username')}
         className={cls.input}
       />
-      <Select
-        readonly={readonly}
-        label={t('Currency')}
-        options={[
-          {
-            value: Currency.EUR,
-            content: Currency.EUR,
-          },
-          {
-            value: Currency.USD,
-            content: Currency.USD,
-          },
-        ]}
-        value={country}
+      <CurrencySelect
+        className={cls.input}
         onChange={onChangeCurrency}
-      />
-      <Select
+        value={currency}
         readonly={readonly}
-        label={t('Country')}
-        options={[
-          {
-            value: Country.Armenia,
-            content: Country.Armenia,
-          },
-          {
-            value: Country.Belarus,
-            content: Country.Belarus,
-          },
-        ]}
-        value={country}
+      />
+      <CountrySelect
+        className={cls.input}
         onChange={onChangeCountry}
+        value={country}
+        readonly={readonly}
       />
     </div>
   );

@@ -34,6 +34,16 @@
   color: var(--inverted-primary-color);
 }
 
+.outlineRed {
+  border: 1px solid var(--red-dark);
+  color: var(--red-dark);
+}
+
+.outlineRedInverted {
+  border: 1px solid var(--red-light);
+  color: var(--red-light);
+}
+
 .background {
   border: none;
   color: var(--primary-color);

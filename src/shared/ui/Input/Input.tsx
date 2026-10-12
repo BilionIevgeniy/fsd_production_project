@@ -6,7 +6,7 @@ type HTMLInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'onC
 
 interface InputProps extends HTMLInputProps {
   className?: string;
-  value?: string;
+  value?: string | number;
   onChange?: (value: string) => void;
   autofocus?: boolean;
   readonly?: boolean;
@@ -47,7 +47,7 @@ export const Input = memo((props: InputProps) => {
   }, [autofocus]);
 
   useEffect(() => {
-    setCaretPosition(getTextWidth(value ?? ''));
+    setCaretPosition(getTextWidth(value?.toString() ?? ''));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

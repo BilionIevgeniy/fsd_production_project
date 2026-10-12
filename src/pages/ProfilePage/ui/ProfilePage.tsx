@@ -14,6 +14,7 @@ import { useCallback, useEffect } from 'react';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { ReducersList } from 'app/providers/StoreProvider/config/StateSchema';
 import { useSelector } from 'react-redux';
+import { updateProfileData } from 'entities/Profile/model/services/updateProfileData/updateProfileData';
 import { ProfilePageHeader } from './ProfilePageHeader/ProfilePageHeader';
 
 const reducers: ReducersList = {
@@ -36,13 +37,17 @@ const ProfilePage = ({ className = '' }: ProfilePageProps) => {
     dispatch(fetchProfileData());
   }, [dispatch]);
 
-  const toggleReadOnly = useCallback(() => {
-    if (!readonly) {
-      dispatch(profileActions.cancelEdit());
-    } else {
-      dispatch(profileActions.setReadOnly(false));
-    }
-  }, [dispatch, readonly]);
+  const editCard = useCallback(() => {
+    dispatch(profileActions.setReadOnly(false));
+  }, [dispatch]);
+
+  const cancelEdit = useCallback(() => {
+    dispatch(profileActions.cancelEdit());
+  }, [dispatch]);
+
+  const saveEdited = useCallback(() => {
+    dispatch(updateProfileData());
+  }, [dispatch]);
 
   const onChangeFirstName = useCallback(
     (value = '') => {
@@ -58,13 +63,59 @@ const ProfilePage = ({ className = '' }: ProfilePageProps) => {
     [dispatch],
   );
 
+  const onChangeAge = useCallback(
+    (value = '') => {
+      // TODO: validate number
+      dispatch(profileActions.updateProfile({ age: value }));
+    },
+    [dispatch],
+  );
+
+  const onChangeCountry = useCallback(
+    (value = '') => {
+      dispatch(profileActions.updateProfile({ country: value }));
+    },
+    [dispatch],
+  );
+
+  const onChangeCity = useCallback(
+    (value = '') => {
+      dispatch(profileActions.updateProfile({ city: value }));
+    },
+    [dispatch],
+  );
+
+  const onChangeAvatar = useCallback(
+    (value = '') => {
+      dispatch(profileActions.updateProfile({ avatar: value }));
+    },
+    [dispatch],
+  );
+
+  const onChangeUsername = useCallback(
+    (value = '') => {
+      dispatch(profileActions.updateProfile({ username: value }));
+    },
+    [dispatch],
+  );
+
   return (
     <DynamicModuleLoader reducers={reducers} removeAfterUnmount>
       <div className={classNames('', {}, [className])}>
-        <ProfilePageHeader toggleReadOnly={toggleReadOnly} readonly={readonly} />
+        <ProfilePageHeader
+          editCard={editCard}
+          cancelEdit={cancelEdit}
+          saveEdited={saveEdited}
+          readonly={readonly}
+        />
         <ProfileCard
+          onChangeAge={onChangeAge}
+          onChangeCountry={onChangeCountry}
+          onChangeCity={onChangeCity}
+          onChangeAvatar={onChangeAvatar}
           onChangeFirstName={onChangeFirstName}
           onChangeLastName={onChangeLastName}
+          onChangeUsername={onChangeUsername}
           readonly={readonly}
           data={formData}
           isLoading={isLoading}

@@ -1,10 +1,10 @@
 import { useDispatch } from 'react-redux';
 import { userActions } from 'entities/User';
 import { Suspense, useEffect } from 'react';
+import { AppRouter } from 'app/providers/RouterProvider';
 import { Loader } from '../shared/ui';
 import { Navbar } from '../widgets/Navbar';
 import { Sidebar } from '../widgets/Sidebar';
-import { AppRouter } from './providers/RouterProvider';
 import './styles/index.scss';
 
 function App() {

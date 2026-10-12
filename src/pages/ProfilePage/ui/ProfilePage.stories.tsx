@@ -4,8 +4,9 @@ import { ThemeDecorator } from 'shared/config/storybook/ThemeDecorator/ThemeDeco
 import ProfilePage from 'pages/ProfilePage/ui/ProfilePage';
 import { StoreDecorator } from 'shared/config/storybook/StoreDecorator/StoreDecorator';
 import { Theme } from 'shared/config/theme';
-import { Country, Currency } from 'shared/const/common';
 import axios from 'axios';
+import { Currency } from 'entities/Currency';
+import { Country } from 'entities/Country';
 
 // Mock transport so the story doesn't hit a real server (none runs in CI)
 const mockApi = axios.create({

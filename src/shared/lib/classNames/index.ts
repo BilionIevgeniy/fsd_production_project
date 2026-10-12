@@ -1,8 +1,6 @@
-export function classNames(
-  cls: string,
-  mods: Record<string, boolean | string> = {},
-  addition: Array<string | undefined> = [],
-) {
+export type Mods = Record<string, boolean | string | undefined>;
+
+export function classNames(cls: string, mods: Mods = {}, addition: Array<string | undefined> = []) {
   return [
     cls,
     ...addition,

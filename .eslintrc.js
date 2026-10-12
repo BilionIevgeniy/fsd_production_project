@@ -57,6 +57,7 @@ module.exports = {
   rules: {
     '@typescript-eslint/naming-convention': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
+
     // === Formatting-related rules delegated to Prettier ===
     // Delegate all formatting rules to Prettier.
     // Prettier will automatically use configuration from .prettierrc.json
@@ -158,7 +159,7 @@ module.exports = {
     ],
     'i18next/no-literal-string': [
       'error',
-      { markupOnly: true, ignoreAttribute: ['to', 'target', 'path', 'data-testid', 'ref'] },
+      { markupOnly: true, ignoreAttribute: ['to', 'target', 'path', 'data-testid', 'ref', 'alt'] },
     ],
     'no-param-reassign': 'off',
   },

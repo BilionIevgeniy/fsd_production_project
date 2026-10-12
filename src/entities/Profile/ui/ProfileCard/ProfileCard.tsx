@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Text, TextAlign, TextTheme } from 'shared/ui/Text/Text';
 import { Input } from 'shared/ui/Input/Input';
 import { Loader } from 'shared/ui';
+import { Avatar } from 'shared/ui/Avatar';
 import cls from './ProfileCard.module.scss';
 import { Profile } from '../../model/types/profile';
 
@@ -12,13 +13,13 @@ interface ProfileCardProps {
   isLoading?: boolean;
   data?: Profile;
   readonly?: boolean;
-  onChangeFirstName: () => void;
-  onChangeLastName: () => void;
-  onChangeAge: () => void;
-  onChangeCountry: () => void;
-  onChangeCity: () => void;
-  onChangeAvatar: () => void;
-  onChangeUsername: () => void;
+  onChangeFirstName?: () => void;
+  onChangeLastName?: () => void;
+  onChangeAge?: () => void;
+  onChangeCountry?: () => void;
+  onChangeCity?: () => void;
+  onChangeAvatar?: () => void;
+  onChangeUsername?: () => void;
 }
 
 export const ProfileCard = (props: ProfileCardProps) => {
@@ -37,7 +38,7 @@ export const ProfileCard = (props: ProfileCardProps) => {
     onChangeAvatar,
     onChangeUsername,
   } = props;
-  const { first, lastname, age, country, city, avatar } = data || {};
+  const { first, lastname, age, country, city, avatar, username } = data || {};
 
   if (isLoading) {
     return (
@@ -60,6 +61,7 @@ export const ProfileCard = (props: ProfileCardProps) => {
   }
   return (
     <div className={classNames(cls.ProfileCard, {}, [className])}>
+      <div className={cls.avatarWrapper}>{avatar && <Avatar src={avatar} alt="avatar" />}</div>
       <Input
         onChange={onChangeFirstName}
         readonly={readonly}
@@ -99,13 +101,13 @@ export const ProfileCard = (props: ProfileCardProps) => {
         onChange={onChangeAvatar}
         readonly={readonly}
         value={avatar ?? ''}
-        placeholder={t('your Avatar')}
+        placeholder={t('Add Avatar URL')}
         className={cls.input}
       />
       <Input
         onChange={onChangeUsername}
         readonly={readonly}
-        value={avatar ?? ''}
+        value={username ?? ''}
         placeholder={t('Your Username')}
         className={cls.input}
       />

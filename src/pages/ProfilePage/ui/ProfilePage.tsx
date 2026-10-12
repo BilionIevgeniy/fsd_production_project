@@ -66,7 +66,7 @@ const ProfilePage = ({ className = '' }: ProfilePageProps) => {
   const onChangeAge = useCallback(
     (value = '') => {
       // TODO: validate number
-      dispatch(profileActions.updateProfile({ age: value }));
+      dispatch(profileActions.updateProfile({ age: Number(value) }));
     },
     [dispatch],
   );

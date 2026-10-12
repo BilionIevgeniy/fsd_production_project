@@ -60,7 +60,10 @@
     "skipLibCheck": true,
 
     // Types for the test environment (Jest)
-    "types": ["node", "jest"]
+    "types": ["node", "jest"],
+
+    // Editor-only: autocomplete for classes from *.module.scss
+    "plugins": [{ "name": "typescript-plugin-css-modules" }]
   },
 
   // Include source files and configuration files

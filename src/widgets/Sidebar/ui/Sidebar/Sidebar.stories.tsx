@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { ThemeDecorator } from 'shared/config/storybook/ThemeDecorator/ThemeDecorator';
+import { StoreDecorator, ThemeDecorator } from 'shared/config/storybook';
 import { Theme } from 'shared/config/theme';
 import { Sidebar } from './Sidebar';
 
@@ -15,9 +15,12 @@ export default {
 
 const Template: ComponentStory<typeof Sidebar> = (args) => <Sidebar {...args} />;
 
+const authorized = StoreDecorator({ user: { authData: { id: '1', username: 'admin' } } });
+
 export const Light = Template.bind({});
 Light.args = {};
+Light.decorators = [authorized];
 
 export const Dark = Template.bind({});
 Dark.args = {};
-Dark.decorators = [ThemeDecorator(Theme.DARK)];
+Dark.decorators = [authorized, ThemeDecorator(Theme.DARK)];
